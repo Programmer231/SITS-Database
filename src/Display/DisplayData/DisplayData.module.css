@@ -1,0 +1,47 @@
+.cardWrapper {
+	width: 30%;
+	margin: 10% 5% 0 0;
+}
+
+.dataWrap {
+	width: 40%;
+	margin: 5% 5%;
+}
+
+@media (max-width: 600px){
+	.dataWrap {
+		width: 100%;
+	}
+}
+
+.contentWrap {
+	padding: 5%;
+}
+.headingWrapper {
+	text-align: center;
+	border-bottom: 5px solid #77002e ;
+}
+
+.actions {
+	margin-top: 5rem;
+	margin-bottom: 1rem;
+	margin: auto;
+	text-align: center;
+}
+
+.actions button {
+	font: inherit;
+	cursor: pointer;
+	background-color: #77002e;
+	color: white;
+	padding: 0.5rem 1.5rem;
+	border: 1px solid #77002e;
+	border-radius: 4px;
+	font-weight: bold;
+}
+
+.actions button:hover,
+.actions button:active {
+	background-color: #a50e48;
+	border-color: #a50e48;
+}
