@@ -4,8 +4,6 @@ import DisplayDefined from "./DisplayDefined";
 import DisplayUndefined from "./DisplayUndefined";
 import { useState, useEffect, useRef } from "react";
 
-const cloneDeep = require("lodash.clonedeep");
-
 const DisplayData = (props) => {
   const [definedState, setDefinedState] = useState([]);
   const [undefinedState, setUndefinedState] = useState([]);
@@ -71,7 +69,7 @@ const DisplayData = (props) => {
       }
 
       fetch(
-        `https://react-practic-b6a39-default-rtdb.firebaseio.com/${props.mySearchedInfo.id}/.json`,
+        `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.id}/.json`,
         {
           method: "DELETE",
           headers: {
@@ -80,7 +78,7 @@ const DisplayData = (props) => {
         }
       );
 
-      fetch("https://react-practic-b6a39-default-rtdb.firebaseio.com/.json", {
+      fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
         method: "POST",
         body: JSON.stringify(finalData),
         headers: {

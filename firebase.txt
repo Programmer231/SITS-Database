@@ -1,0 +1,13 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyDllJmdNEN8alQzFZ6wjy71U-dl3N17W6I",
+  authDomain: "sits-practice.firebaseapp.com",
+  projectId: "sits-practice",
+  storageBucket: "sits-practice.appspot.com",
+  messagingSenderId: "621218416774",
+  appId: "1:621218416774:web:2c238b1ed0c4a7b7afe907",
+  measurementId: "G-QFMZGGDSYD"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

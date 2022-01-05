@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <nav className={classes.wrapper}>
-        <h1 className={classes.element}>Whirlwind Database</h1>
+        <h1 className={classes.element}>SITS Database</h1>
       </nav>
       <AddField />
     </div>

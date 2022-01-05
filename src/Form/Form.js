@@ -69,7 +69,7 @@ const Form = (props) => {
 
   useEffect(() => {
     if (!isFirstRender.current) {
-      fetch("https://react-practic-b6a39-default-rtdb.firebaseio.com/.json", {
+      fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {

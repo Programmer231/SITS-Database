@@ -2,9 +2,7 @@ import classes from "./DisplayField.module.css";
 import { useEffect, useState } from "react";
 import Card from "../UI/Card";
 import extraClasses from "../Form/NewMeetupForm.module.css";
-import moreClasses from "./DisplayData/DisplayData.module.css";
 import DisplayData from "./DisplayData/DisplayData";
-import { cloneDeep } from "lodash";
 
 const DisplayField = (props) => {
   const { searchedInfo, certifications, submittedData } = props;

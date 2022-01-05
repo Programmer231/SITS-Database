@@ -34,7 +34,7 @@ const AddField = () => {
   const displayDataHandler = (event) => {
     setSearchBrand({ brand: event.target.value });
   };
-
+ 
   const submitHandler = (event) => {
     event.preventDefault();
     setSubmitted((prevState) => !prevState);
@@ -44,7 +44,7 @@ const AddField = () => {
     let certificationData = [];
     if (firstRender.current) {
       fetch(
-        "https://react-practic-b6a39-default-rtdb.firebaseio.com/Certifications.json",
+        "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json",
         {
           method: "POST",
           body: JSON.stringify(addField),
@@ -52,7 +52,7 @@ const AddField = () => {
         }
       ).then(() => {
         fetch(
-          "https://react-practic-b6a39-default-rtdb.firebaseio.com/Certifications.json"
+          "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json"
         )
           .then((response) => {
             return response.json();
@@ -68,7 +68,7 @@ const AddField = () => {
       });
     } else {
       fetch(
-        "https://react-practic-b6a39-default-rtdb.firebaseio.com/Certifications.json"
+        "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json"
       )
         .then((response) => {
           return response.json();
@@ -89,7 +89,7 @@ const AddField = () => {
     if (firstRender.current) {
       let query = `?orderBy="brand"&indexOn="brand"&equalTo="${searchBrand.brand}"`;
       if (searchBrand.brand.length === 0) {
-        fetch("https://react-practic-b6a39-default-rtdb.firebaseio.com/.json")
+        fetch("https://sits-practice-default-rtdb.firebaseio.com/.json")
           .then((response) => {
             return response.json();
           })
@@ -105,7 +105,7 @@ const AddField = () => {
           });
       } else {
         fetch(
-          "https://react-practic-b6a39-default-rtdb.firebaseio.com/.json" +
+          "https://sits-practice-default-rtdb.firebaseio.com/.json" +
             query
         )
           .then((response) => {
