@@ -25,6 +25,7 @@ const Form = (props) => {
   const [formData, setFormData] = useState({
     brand: "",
     website: "",
+    number: 0,
   });
 
   const inputChangedHandler = (event, name) => {
@@ -52,9 +53,9 @@ const Form = (props) => {
 
     for (let x in checkedData) {
       if (checkedData[x]) {
-        certificationInfo[x] = "Y";
+        certificationInfo[x] = true;
       } else {
-        certificationInfo[x] = "";
+        certificationInfo[x] = false;
       }
     }
 
@@ -79,6 +80,7 @@ const Form = (props) => {
         setFormData({
           brand: "",
           website: "",
+          number: 0,
         });
         setCheckedData({});
       });
@@ -95,7 +97,7 @@ const Form = (props) => {
           onSubmit={(event) => submitHandler(event)}
         >
           <div className={classes.control}>
-            <label htmlFor="Brand">Brand Name</label>
+            <label htmlFor="Brand">Part</label>
             <input
               type="text"
               value={formData.brand}
@@ -104,7 +106,7 @@ const Form = (props) => {
             />
           </div>
           <div className={classes.control}>
-            <label htmlFor="URL">Website URL</label>
+            <label htmlFor="URL">Description</label>
             <input
               type="text"
               value={formData.website}
@@ -112,7 +114,16 @@ const Form = (props) => {
             />
           </div>
           <div className={classes.control}>
-            <label htmlFor="Info">Additional Information</label>
+            <label htmlFor="URL">Number of Items</label>
+            <input
+              type="number"
+              value={formData.number}
+              onChange={(event) => inputChangedHandler(event, "number")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="Info">Other Important Information</label>
             <div className={classes.displayCheckBoxWrapper}>
               {props.certifications.map((c) => (
                 <CheckBox
