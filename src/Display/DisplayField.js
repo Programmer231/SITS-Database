@@ -21,6 +21,9 @@ const DisplayField = (props) => {
       for (let x of props.certifications) {
         let counter = false;
         for (let z in y) {
+          if (typeof z === String) {
+            continue;
+          }
           if (z === x.type) {
             counter = true;
           }
@@ -50,10 +53,10 @@ const DisplayField = (props) => {
         <div className={classes.wrap}>
           <form onSubmit={(event) => props.searchHandler(event)}>
             <div className={extraClasses.control}>
-              <label htmlFor="Brand">Search a Brand:</label>
+              <label htmlFor="Part">Search a Part:</label>
               <input
                 type="text"
-                value={props.formData.brand}
+                value={props.formData.part}
                 onChange={(event) => props.inputChangedHandler(event)}
               />
             </div>
@@ -65,10 +68,10 @@ const DisplayField = (props) => {
       </Card>
       <div className={classes.dataFlex}>
         {numberElements.length === props.searchedInfo.length
-          ? props.searchedInfo.map((brand, index) => {
+          ? props.searchedInfo.map((part, index) => {
               return (
                 <DisplayData
-                  key={brand.id}
+                  key={part.id}
                   definedValues={numberElements[index][0]}
                   undefinedValues={numberElements[index][1]}
                   mySearchedInfo={props.searchedInfo[index]}

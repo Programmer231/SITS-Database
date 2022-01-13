@@ -14,11 +14,11 @@ const AddField = () => {
 
   const [certificationState, setCertificationState] = useState([]);
 
-  const [searchBrand, setSearchBrand] = useState({ brand: "" });
+  const [searchPart, setSearchPart] = useState({ part: "" });
 
   const [submittedSearch, setSubmittedSearch] = useState(false);
 
-  const [brandInfo, setBrandInfo] = useState([]);
+  const [partInfo, setPartInfo] = useState([]);
 
   const inputChangedHandler = (event) => {
     setAddField({
@@ -32,9 +32,9 @@ const AddField = () => {
   };
 
   const displayDataHandler = (event) => {
-    setSearchBrand({ brand: event.target.value });
+    setSearchPart({ part: event.target.value });
   };
- 
+
   const submitHandler = (event) => {
     event.preventDefault();
     setSubmitted((prevState) => !prevState);
@@ -85,38 +85,35 @@ const AddField = () => {
   }, [submitted]);
 
   useEffect(() => {
-    let brandData = [];
+    let partData = [];
     if (firstRender.current) {
-      let query = `?orderBy="brand"&indexOn="brand"&equalTo="${searchBrand.brand}"`;
-      if (searchBrand.brand.length === 0) {
+      let query = `?orderBy="part"&indexOn="brand"&equalTo="${searchPart.part}"`;
+      if (searchPart.part.length === 0) {
         fetch("https://sits-practice-default-rtdb.firebaseio.com/.json")
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             for (let key in data) {
-              if (!data[key].brand) {
+              if (!data[key].part) {
                 continue;
               }
-              brandData.push({ id: key, ...data[key] });
+              partData.push({ id: key, ...data[key] });
             }
-            setBrandInfo(brandData);
-            setSearchBrand({ brand: "" });
+            setPartInfo(partData);
+            setSearchPart({ part: "" });
           });
       } else {
-        fetch(
-          "https://sits-practice-default-rtdb.firebaseio.com/.json" +
-            query
-        )
+        fetch("https://sits-practice-default-rtdb.firebaseio.com/.json" + query)
           .then((response) => {
             return response.json();
           })
           .then((data) => {
             for (let key in data) {
-              brandData.push({ id: key, ...data[key] });
+              partData.push({ id: key, ...data[key] });
             }
-            setBrandInfo(brandData);
-            setSearchBrand({ brand: "" });
+            setPartInfo(partData);
+            setSearchPart({ part: "" });
           });
       }
     }
@@ -159,11 +156,11 @@ const AddField = () => {
 
       <DisplayField
         inputChangedHandler={displayDataHandler}
-        formData={searchBrand}
+        formData={searchPart}
         searchHandler={submitSearchHandler}
-        searchedInfo={brandInfo}
+        searchedInfo={partInfo}
         certifications={certificationState}
-        setSearchedInfo={setBrandInfo}
+        setSearchedInfo={setPartInfo}
         submittedData={submitted}
       />
     </div>

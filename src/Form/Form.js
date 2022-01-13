@@ -23,8 +23,8 @@ const Form = (props) => {
   const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
-    brand: "",
-    website: "",
+    part: "",
+    description: "",
     number: 0,
   });
 
@@ -65,10 +65,12 @@ const Form = (props) => {
         ...certificationInfo,
       };
     });
+
     setSubmitted((prevState) => !prevState);
   };
 
   useEffect(() => {
+    console.log(formData);
     if (!isFirstRender.current) {
       fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
         method: "POST",
@@ -78,8 +80,8 @@ const Form = (props) => {
         },
       }).then(() => {
         setFormData({
-          brand: "",
-          website: "",
+          part: "",
+          description: "",
           number: 0,
         });
         setCheckedData({});
@@ -97,11 +99,11 @@ const Form = (props) => {
           onSubmit={(event) => submitHandler(event)}
         >
           <div className={classes.control}>
-            <label htmlFor="Brand">Part</label>
+            <label htmlFor="Part">Part</label>
             <input
               type="text"
-              value={formData.brand}
-              onChange={(event) => inputChangedHandler(event, "brand")}
+              value={formData.part}
+              onChange={(event) => inputChangedHandler(event, "part")}
               required
             />
           </div>
@@ -109,8 +111,8 @@ const Form = (props) => {
             <label htmlFor="URL">Description</label>
             <input
               type="text"
-              value={formData.website}
-              onChange={(event) => inputChangedHandler(event, "website")}
+              value={formData.description}
+              onChange={(event) => inputChangedHandler(event, "description")}
             />
           </div>
           <div className={classes.control}>

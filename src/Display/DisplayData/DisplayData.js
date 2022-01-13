@@ -15,30 +15,23 @@ const DisplayData = (props) => {
   const { definedValues, undefinedValues, mySearchedInfo } = props;
 
   useEffect(() => {
-    console.log(mySearchedInfo);
-
-    let brandInfoValues = {};
-    let undefinedBrandInfoValues = {};
+    let undefinedPartInfoValues = {};
+    let definedPartInfoValues = {};
     setDefinedState(definedValues);
     setUndefinedState(undefinedValues);
 
-    for (let x of definedValues) {
-      if (props.mySearchedInfo[x.type] === "Y") {
-        brandInfoValues[x.type] = true;
-      } else {
-        brandInfoValues[x.type] = false;
-      }
-    }
-
     for (let y of undefinedValues) {
-      undefinedBrandInfoValues[y.type] = false;
+      undefinedPartInfoValues[y.type] = false;
+    }
+    for (let x of definedValues) {
+      definedPartInfoValues[x.type] = mySearchedInfo[x.type];
     }
 
     setClickedState((prevState) => {
       return {
         ...prevState,
-        ...brandInfoValues,
-        ...undefinedBrandInfoValues,
+        ...definedPartInfoValues,
+        ...undefinedPartInfoValues,
       };
     });
   }, [JSON.stringify(mySearchedInfo)]);
@@ -56,15 +49,16 @@ const DisplayData = (props) => {
   useEffect(() => {
     if (!firstRender.current) {
       const finalData = {
-        brand: props.mySearchedInfo.brand,
-        website: props.mySearchedInfo.website,
+        part: props.mySearchedInfo.part,
+        description: props.mySearchedInfo.description,
+        number: props.mySearchedInfo.number,
       };
 
       for (let x in clickedState) {
         if (clickedState[x]) {
-          finalData[x] = "Y";
+          finalData[x] = true;
         } else {
-          finalData[x] = "";
+          finalData[x] = false;
         }
       }
 
@@ -95,7 +89,7 @@ const DisplayData = (props) => {
       <Card>
         <div className={classes.contentWrap}>
           <h1 className={classes.headingWrapper}>
-            {props.mySearchedInfo.brand}
+            {props.mySearchedInfo.part}
           </h1>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>
           {definedState.map((value) => {
