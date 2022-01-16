@@ -5,11 +5,7 @@ import extraClasses from "../Form/NewMeetupForm.module.css";
 import DisplayData from "./DisplayData/DisplayData";
 
 const DisplayField = (props) => {
-  const { searchedInfo, certifications, submittedData } = props;
-
   const [numberElements, setNumberElements] = useState([]);
-
-  const [counter, setCounter] = useState(false);
 
   useEffect(() => {
     let numOfElements = [];
@@ -42,10 +38,8 @@ const DisplayField = (props) => {
       definedValues = [];
     }
 
-    setCounter(false);
-
     setNumberElements(allElements);
-  }, [submittedData, searchedInfo, certifications]);
+  }, [props.searchedInfo, props.certifications]);
 
   return (
     <div className={classes.cardWrap}>

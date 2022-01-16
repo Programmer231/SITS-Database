@@ -1,11 +1,9 @@
 import classes from "./NewMeetupForm.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import CheckBox from "./CheckBox/CheckBox";
 
 const Form = (props) => {
-  let isFirstRender = useRef(true);
-
   const [checkedData, setCheckedData] = useState({});
 
   const { certifications } = props;
@@ -19,8 +17,6 @@ const Form = (props) => {
 
     setCheckedData({ ...finalChecks });
   }, [certifications]);
-
-  const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     part: "",
@@ -49,47 +45,21 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    let certificationInfo = {};
-
-    for (let x in checkedData) {
-      if (checkedData[x]) {
-        certificationInfo[x] = true;
-      } else {
-        certificationInfo[x] = false;
-      }
-    }
-
-    setFormData((prevState) => {
-      return {
-        ...prevState,
-        ...certificationInfo,
-      };
-    });
-
-    setSubmitted((prevState) => !prevState);
-  };
-
-  useEffect(() => {
-    console.log(formData);
-    if (!isFirstRender.current) {
-      fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(() => {
-        setFormData({
-          part: "",
-          description: "",
-          number: 0,
-        });
-        setCheckedData({});
+    fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
+      method: "POST",
+      body: JSON.stringify({ ...formData, ...checkedData }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() => {
+      setFormData({
+        part: "",
+        description: "",
+        number: 0,
       });
-    } else {
-      isFirstRender.current = false;
-    }
-  }, [submitted]);
+      setCheckedData({});
+    });
+  };
 
   return (
     <div className={classes.contentWrapper}>
