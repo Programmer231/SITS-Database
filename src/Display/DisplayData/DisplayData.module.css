@@ -5,21 +5,22 @@
 
 .dataWrap {
 	width: 40%;
-	margin: 5% 5%;
+	margin: 50px 70px;
+
 }
 
-@media (max-width: 600px){
+@media (max-width: 900px){
 	.dataWrap {
 		width: 100%;
 	}
 }
 
 .contentWrap {
-	padding: 5%;
+	padding: 50px;
 }
 .headingWrapper {
-	text-align: center;
 	border-bottom: 5px solid #77002e ;
+	overflow: none;
 }
 
 .actions {
@@ -44,4 +45,22 @@
 .actions button:active {
 	background-color: #a50e48;
 	border-color: #a50e48;
+}
+
+.headingFormWrapper{
+	width: 100%;
+	border: none;
+	font-weight: bold;
+	font-size: 2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.headingFormWrapper > input {
+	border: none;
+	font-weight: bold;
+	font-size: 2em;
+	width: 100px;
 }

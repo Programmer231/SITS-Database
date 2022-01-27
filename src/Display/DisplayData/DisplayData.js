@@ -8,6 +8,7 @@ const DisplayData = (props) => {
   const [definedState, setDefinedState] = useState([]);
   const [undefinedState, setUndefinedState] = useState([]);
   const [clickedState, setClickedState] = useState({});
+  const [numberState, setNumberState] = useState(0);
 
   const { definedValues, undefinedValues, mySearchedInfo } = props;
 
@@ -16,6 +17,7 @@ const DisplayData = (props) => {
     let definedPartInfoValues = {};
     setDefinedState(definedValues);
     setUndefinedState(undefinedValues);
+    setNumberState(mySearchedInfo.number);
 
     for (let y of undefinedValues) {
       undefinedPartInfoValues[y.type] = false;
@@ -39,11 +41,15 @@ const DisplayData = (props) => {
     });
   };
 
+  const changedNumberHandler = (event) => {
+    setNumberState(event.target.value);
+  };
+
   const submitHandler = () => {
     const finalData = {
       part: props.mySearchedInfo.part,
       description: props.mySearchedInfo.description,
-      number: props.mySearchedInfo.number,
+      number: numberState,
     };
 
     for (let x in clickedState) {
@@ -77,9 +83,18 @@ const DisplayData = (props) => {
     <div className={classes.dataWrap}>
       <Card>
         <div className={classes.contentWrap}>
-          <h1 className={classes.headingWrapper}>
-            {props.mySearchedInfo.part}
-          </h1>
+          <div className={classes.headingWrapper}>
+            <h1>{props.mySearchedInfo.part}</h1>
+            <div className={classes.headingFormWrapper}>
+              <label htmlFor="number">Number: </label>
+              <input
+                name="number"
+                type="number"
+                value={numberState}
+                onChange={(event) => changedNumberHandler(event)}
+              />
+            </div>
+          </div>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>
           {definedState.map((value) => {
             return (
