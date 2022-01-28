@@ -63,20 +63,13 @@ const DisplayData = (props) => {
     fetch(
       `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.id}/.json`,
       {
-        method: "DELETE",
+        method: "PATCH",
+        body: JSON.stringify(finalData),
         headers: {
           "Content-Type": "application/json",
         },
       }
     );
-
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
-      method: "POST",
-      body: JSON.stringify(finalData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
   };
 
   return (
