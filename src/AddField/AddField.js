@@ -128,6 +128,19 @@ const AddField = () => {
                   required
                 />
               </div>
+              <div className = {classes.addFieldCheckbox}>
+                <h2>Number</h2>
+              <input
+                  type="checkbox"
+                  value= "Number"
+              />
+
+              <h2>YES/NO</h2>
+              <input
+                  type="checkbox"
+                  value= "YES/NO"
+              />
+              </div>
               <div className={classes.actions}>
                 <button type="submit">Submit</button>
               </div>
