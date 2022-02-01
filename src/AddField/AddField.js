@@ -6,13 +6,24 @@ import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
 
 const AddField = () => {
-  const [addField, setAddField] = useState({ type: "" });
+  const [addField, setAddField] = useState({ type: "", number: false, checkboxBoolean: false });
 
   const [certificationState, setCertificationState] = useState([]);
 
   const [searchPart, setSearchPart] = useState({ part: "" });
 
   const [partInfo, setPartInfo] = useState([]);
+
+  const addFieldCheckboxChangedHandler = (name) => {
+    setAddField(prevState => {
+      return {
+        ...prevState,
+        number: false,
+        checkboxBoolean: false,
+        [name]: !prevState[name],
+      }
+    })
+  }
 
   const submitAddField = () => {
     let certificationData = [];
@@ -129,16 +140,24 @@ const AddField = () => {
                 />
               </div>
               <div className = {classes.addFieldCheckbox}>
-                <h2>Number</h2>
+                <label htmlFor = "Number">Number</label>
               <input
                   type="checkbox"
                   value= "Number"
+                  name = "number"
+                  checked = {addField.number}
+                  onChange = {() => addFieldCheckboxChangedHandler("number")}
+                  required = {!(addField.number || addField.checkboxBoolean)}
               />
 
-              <h2>YES/NO</h2>
+              <label htmlFor="Yes/No">YES/NO</label>
               <input
                   type="checkbox"
                   value= "YES/NO"
+                  name = "yes/no"
+                  checked = {addField.checkboxBoolean}
+                  onChange = {() => addFieldCheckboxChangedHandler("checkboxBoolean")}
+                  required = {!(addField.checkboxBoolean || addField.number)}
               />
               </div>
               <div className={classes.actions}>
