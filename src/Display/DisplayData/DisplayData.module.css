@@ -69,3 +69,12 @@
     width: 100px;
   }
 }
+
+.description {
+  text-align: center;
+  cursor: pointer;
+}
+
+.description_header {
+  display: block;
+}

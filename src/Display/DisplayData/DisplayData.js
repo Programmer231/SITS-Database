@@ -9,6 +9,11 @@ const DisplayData = (props) => {
   const [undefinedState, setUndefinedState] = useState([]);
   const [clickedState, setClickedState] = useState({});
   const [numberState, setNumberState] = useState(0);
+  const [descriptionClicked, setDescriptionState] = useState();
+
+  const descClickedHandler = () => {
+    setDescriptionState((prevState) => !prevState);
+  };
 
   const { definedValues, undefinedValues, mySearchedInfo } = props;
 
@@ -86,6 +91,17 @@ const DisplayData = (props) => {
                 value={numberState}
                 onChange={(event) => changedNumberHandler(event)}
               />
+            </div>
+            <div className={classes.description}>
+              <h1
+                className={classes.description_header}
+                onClick={descClickedHandler}
+              >
+                Description:
+              </h1>
+              {descriptionClicked ? (
+                <h4>{props.mySearchedInfo.description}</h4>
+              ) : null}
             </div>
           </div>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>
