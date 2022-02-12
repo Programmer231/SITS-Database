@@ -46,7 +46,7 @@
   border-color: #a50e48;
 }
 
-.headingFormWrapper {
+.mainDataFormWrapper {
   width: 100%;
   border: none;
   font-weight: bold;
@@ -57,10 +57,11 @@
   justify-content: space-between;
 }
 
-.headingFormWrapper > input {
+.mainDataFormWrapper input
+ {
   border: none;
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1em;
   width: 200px;
 }
 
@@ -77,4 +78,11 @@
 
 .description_header {
   display: block;
+}
+
+.priceHeadings {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
 }

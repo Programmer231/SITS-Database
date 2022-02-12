@@ -8,11 +8,35 @@ const DisplayData = (props) => {
   const [definedState, setDefinedState] = useState([]);
   const [undefinedState, setUndefinedState] = useState([]);
   const [clickedState, setClickedState] = useState({});
-  const [numberState, setNumberState] = useState(0);
-  const [descriptionClicked, setDescriptionState] = useState();
+  const [descriptionClicked, setDescriptionState] = useState(false);
+  const [serialClicked, setSerialClicked] = useState(false);
+  const [assetTagClicked, setAssetTagClicked] = useState(false);
+  const [PCEPTagClicked, setPCEPTagClicked] = useState(false);
+
+  const [updatedFormData, setUpdatedFormData] = useState({
+    part: props.mySearchedInfo.part || null,
+    description: props.mySearchedInfo.description || null,
+    number: props.mySearchedInfo.number || null,
+    price: props.mySearchedInfo.price || null,
+    totalPrice: props.mySearchedInfo.totalPrice || null,
+    PCEPTagNumber: props.mySearchedInfo.PCEPTagNumber || null,
+    assetTagNumber: props.mySearchedInfo.assetTagNumber || null,
+    serialNumber: props.mySearchedInfo.serialNumber || null,
+    purpose: props.mySearchedInfo.purpose || null,
+    type: props.mySearchedInfo.type || null,
+  });
 
   const descClickedHandler = () => {
     setDescriptionState((prevState) => !prevState);
+  };
+
+  const inputChangedHandler = (event, name) => {
+    setUpdatedFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: event.target.value,
+      };
+    });
   };
 
   const { definedValues, undefinedValues, mySearchedInfo } = props;
@@ -22,7 +46,6 @@ const DisplayData = (props) => {
     let definedPartInfoValues = {};
     setDefinedState(definedValues);
     setUndefinedState(undefinedValues);
-    setNumberState(mySearchedInfo.number);
 
     for (let y of undefinedValues) {
       undefinedPartInfoValues[y.type] = false;
@@ -46,17 +69,10 @@ const DisplayData = (props) => {
     });
   };
 
-  const changedNumberHandler = (event) => {
-    setNumberState(event.target.value);
-  };
-
   const submitHandler = () => {
-    const finalData = {
-      part: props.mySearchedInfo.part,
-      description: props.mySearchedInfo.description,
-      number: numberState,
-    };
+    const finalData = { ...updatedFormData };
 
+    //These lines need modification when we add the numbers to them
     for (let x in clickedState) {
       if (clickedState[x]) {
         finalData[x] = true;
@@ -82,14 +98,70 @@ const DisplayData = (props) => {
       <Card>
         <div className={classes.contentWrap}>
           <div className={classes.headingWrapper}>
-            <h1>{props.mySearchedInfo.part}</h1>
-            <div className={classes.headingFormWrapper}>
+            <h1 style={{ textAlign: "center" }}>{props.mySearchedInfo.part}</h1>
+            <div className={classes.mainDataFormWrapper}>
               <label htmlFor="number">Number: </label>
               <input
                 name="number"
                 type="number"
-                value={numberState}
-                onChange={(event) => changedNumberHandler(event)}
+                value={updatedFormData.number || 0}
+                onChange={(event) => inputChangedHandler(event, "number")}
+              />
+            </div>
+            <div className={classes.mainDataFormWrapper}>
+              <label htmlFor="price">Price: </label>
+              <div>
+                <h1 className={classes.priceHeadings}>$</h1>
+                <input
+                  className={classes.money}
+                  name="price"
+                  type="number"
+                  value={updatedFormData.price || 0}
+                  onChange={(event) => inputChangedHandler(event, "price")}
+                />
+              </div>
+            </div>
+            <div className={classes.mainDataFormWrapper}>
+              <label htmlFor="total price">Total Price: </label>
+              <div>
+                <h1 className={classes.priceHeadings}>$</h1>
+                <input
+                  className={classes.money}
+                  name="total price"
+                  type="number"
+                  value={updatedFormData.price * updatedFormData.number || 0}
+                />
+              </div>
+            </div>
+            <div className={classes.mainDataFormWrapper}>
+              <label htmlFor="PCEP tag">PCEPTagNumber: </label>
+              <input
+                name="PCEP tag"
+                type="number"
+                value={updatedFormData.PCEPTagNumber || 0}
+                onChange={(event) =>
+                  inputChangedHandler(event, "PCEPTagNumber")
+                }
+              />
+            </div>
+            <div className={classes.mainDataFormWrapper}>
+              <label htmlFor="asset tag">assetTagNumber: </label>
+              <input
+                name="asset tag"
+                type="number"
+                value={updatedFormData.assetTagNumber || 0}
+                onChange={(event) =>
+                  inputChangedHandler(event, "assetTagNumber")
+                }
+              />
+            </div>
+            <div className={classes.mainDataFormWrapper}>
+              <label htmlFor="serial">Serial Number: </label>
+              <input
+                name="serial"
+                type="number"
+                value={updatedFormData.serialNumber || 0}
+                onChange={(event) => inputChangedHandler(event, "serialNumber")}
               />
             </div>
             <div className={classes.description}>

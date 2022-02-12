@@ -22,6 +22,13 @@ const Form = (props) => {
     part: "",
     description: "",
     number: 0,
+    price: 0,
+    totalPrice: 0,
+    PCEPTagNumber: 0,
+    assetTagNumber: 0,
+    serialNumber: 0,
+    purpose: "",
+    type: "",
   });
 
   const inputChangedHandler = (event, name) => {
@@ -70,7 +77,9 @@ const Form = (props) => {
         >
           <div className={classes.control}>
             <label htmlFor="Part">Part</label>
+
             <input
+              name="Part"
               type="text"
               value={formData.part}
               onChange={(event) => inputChangedHandler(event, "part")}
@@ -78,19 +87,71 @@ const Form = (props) => {
             />
           </div>
           <div className={classes.control}>
-            <label htmlFor="URL">Description</label>
+            <label htmlFor="description">Description</label>
             <input
+              name="description"
               type="text"
               value={formData.description}
               onChange={(event) => inputChangedHandler(event, "description")}
             />
           </div>
           <div className={classes.control}>
-            <label htmlFor="URL">Number of Items</label>
+            <label htmlFor="serial">Serial Number</label>
             <input
+              name="serial"
+              type="number"
+              value={formData.serialNumber}
+              onChange={(event) => inputChangedHandler(event, "serialNumber")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="asset tag">Asset Tag Number</label>
+            <input
+              name="asset tag"
+              type="number"
+              value={formData.assetTagNumber}
+              onChange={(event) => inputChangedHandler(event, "assetTagNumber")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="PCEP tag">PCEP Tag Number</label>
+            <input
+              name="PCEP tag"
+              type="number"
+              value={formData.PCEPTagNumber}
+              onChange={(event) => inputChangedHandler(event, "PCEPTagNumber")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="price">Price</label>
+            <input
+              name="Price"
+              type="number"
+              value={formData.price}
+              onChange={(event) => inputChangedHandler(event, "price")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="quantity">Number of Items</label>
+            <input
+              name="quantity"
               type="number"
               value={formData.number}
               onChange={(event) => inputChangedHandler(event, "number")}
+              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="total price">Total Price</label>
+            <input
+              name="total price"
+              type="number"
+              value={formData.number * formData.price}
+              onChange={(event) => inputChangedHandler(event, "totalPrice")}
               required
             />
           </div>
