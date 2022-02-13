@@ -14,29 +14,39 @@ const DisplayData = (props) => {
   const [PCEPTagClicked, setPCEPTagClicked] = useState(false);
 
   const [updatedFormData, setUpdatedFormData] = useState({
-    part: props.mySearchedInfo.part || null,
-    description: props.mySearchedInfo.description || null,
-    number: props.mySearchedInfo.number || null,
-    price: props.mySearchedInfo.price || null,
-    totalPrice: props.mySearchedInfo.totalPrice || null,
-    PCEPTagNumber: props.mySearchedInfo.PCEPTagNumber || null,
-    assetTagNumber: props.mySearchedInfo.assetTagNumber || null,
-    serialNumber: props.mySearchedInfo.serialNumber || null,
-    purpose: props.mySearchedInfo.purpose || null,
-    type: props.mySearchedInfo.type || null,
+    part: props.mySearchedInfo.part || "",
+    description: props.mySearchedInfo.description || "",
+    number: props.mySearchedInfo.number || 0,
+    price: props.mySearchedInfo.price || 0,
+    PCEPTagNumber: props.mySearchedInfo.PCEPTagNumber || 0,
+    assetTagNumber: props.mySearchedInfo.assetTagNumber || 0,
+    serialNumber: props.mySearchedInfo.serialNumber || 0,
+    purpose: props.mySearchedInfo.purpose || "",
+    type: props.mySearchedInfo.type || "",
   });
 
   const descClickedHandler = () => {
     setDescriptionState((prevState) => !prevState);
   };
 
-  const inputChangedHandler = (event, name) => {
+  const inputStringChangedHandler = (event, name) => {
     setUpdatedFormData((prevState) => {
       return {
         ...prevState,
         [name]: event.target.value,
       };
     });
+    console.log(event);
+  };
+
+  const inputNumberChangedHandler = (event, name) => {
+    setUpdatedFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: event.target.valueAsNumber,
+      };
+    });
+    console.log(event);
   };
 
   const { definedValues, undefinedValues, mySearchedInfo } = props;
@@ -70,6 +80,7 @@ const DisplayData = (props) => {
   };
 
   const submitHandler = () => {
+    console.log(updatedFormData);
     const finalData = { ...updatedFormData };
 
     //These lines need modification when we add the numbers to them
@@ -104,8 +115,8 @@ const DisplayData = (props) => {
               <input
                 name="number"
                 type="number"
-                value={updatedFormData.number || 0}
-                onChange={(event) => inputChangedHandler(event, "number")}
+                value={updatedFormData.number}
+                onChange={(event) => inputNumberChangedHandler(event, "number")}
               />
             </div>
             <div className={classes.mainDataFormWrapper}>
@@ -116,42 +127,40 @@ const DisplayData = (props) => {
                   className={classes.money}
                   name="price"
                   type="number"
-                  value={updatedFormData.price || 0}
-                  onChange={(event) => inputChangedHandler(event, "price")}
+                  value={updatedFormData.price}
+                  onChange={(event) =>
+                    inputNumberChangedHandler(event, "price")
+                  }
                 />
               </div>
             </div>
             <div className={classes.mainDataFormWrapper}>
               <label htmlFor="total price">Total Price: </label>
               <div>
-                <h1 className={classes.priceHeadings}>$</h1>
-                <input
-                  className={classes.money}
-                  name="total price"
-                  type="number"
-                  value={updatedFormData.price * updatedFormData.number || 0}
-                />
+                <h1 className={classes.priceHeadings}>
+                  ${updatedFormData.price * updatedFormData.number}
+                </h1>
               </div>
             </div>
             <div className={classes.mainDataFormWrapper}>
-              <label htmlFor="PCEP tag">PCEPTagNumber: </label>
+              <label htmlFor="PCEP tag">PCEP Tag Number: </label>
               <input
                 name="PCEP tag"
                 type="number"
-                value={updatedFormData.PCEPTagNumber || 0}
+                value={updatedFormData.PCEPTagNumber}
                 onChange={(event) =>
-                  inputChangedHandler(event, "PCEPTagNumber")
+                  inputNumberChangedHandler(event, "PCEPTagNumber")
                 }
               />
             </div>
             <div className={classes.mainDataFormWrapper}>
-              <label htmlFor="asset tag">assetTagNumber: </label>
+              <label htmlFor="asset tag">Asset Tag Number: </label>
               <input
                 name="asset tag"
                 type="number"
-                value={updatedFormData.assetTagNumber || 0}
+                value={updatedFormData.assetTagNumber}
                 onChange={(event) =>
-                  inputChangedHandler(event, "assetTagNumber")
+                  inputNumberChangedHandler(event, "assetTagNumber")
                 }
               />
             </div>
@@ -160,8 +169,10 @@ const DisplayData = (props) => {
               <input
                 name="serial"
                 type="number"
-                value={updatedFormData.serialNumber || 0}
-                onChange={(event) => inputChangedHandler(event, "serialNumber")}
+                value={updatedFormData.serialNumber}
+                onChange={(event) =>
+                  inputNumberChangedHandler(event, "serialNumber")
+                }
               />
             </div>
             <div className={classes.description}>
@@ -172,7 +183,9 @@ const DisplayData = (props) => {
                 Description:
               </h1>
               {descriptionClicked ? (
-                <h4>{props.mySearchedInfo.description}</h4>
+                <h4 className={classes.textFieldStyles}>
+                  {props.mySearchedInfo.description}
+                </h4>
               ) : null}
             </div>
           </div>

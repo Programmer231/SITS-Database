@@ -23,7 +23,6 @@ const Form = (props) => {
     description: "",
     number: 0,
     price: 0,
-    totalPrice: 0,
     PCEPTagNumber: 0,
     assetTagNumber: 0,
     serialNumber: 0,
@@ -31,11 +30,22 @@ const Form = (props) => {
     type: "",
   });
 
-  const inputChangedHandler = (event, name) => {
+  const inputStringChangedHandler = (event, name) => {
+    console.log(event);
     setFormData((prevState) => {
       return {
         ...prevState,
         [name]: event.target.value,
+      };
+    });
+  };
+
+  const inputNumberChangedHandler = (event, name) => {
+    console.log(event);
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: event.target.valueAsNumber,
       };
     });
   };
@@ -63,6 +73,12 @@ const Form = (props) => {
         part: "",
         description: "",
         number: 0,
+        price: 0,
+        PCEPTagNumber: 0,
+        assetTagNumber: 0,
+        serialNumber: 0,
+        purpose: "",
+        type: "",
       });
       setCheckedData({});
     });
@@ -82,7 +98,7 @@ const Form = (props) => {
               name="Part"
               type="text"
               value={formData.part}
-              onChange={(event) => inputChangedHandler(event, "part")}
+              onChange={(event) => inputStringChangedHandler(event, "part")}
               required
             />
           </div>
@@ -92,7 +108,9 @@ const Form = (props) => {
               name="description"
               type="text"
               value={formData.description}
-              onChange={(event) => inputChangedHandler(event, "description")}
+              onChange={(event) =>
+                inputStringChangedHandler(event, "description")
+              }
             />
           </div>
           <div className={classes.control}>
@@ -101,7 +119,9 @@ const Form = (props) => {
               name="serial"
               type="number"
               value={formData.serialNumber}
-              onChange={(event) => inputChangedHandler(event, "serialNumber")}
+              onChange={(event) =>
+                inputNumberChangedHandler(event, "serialNumber")
+              }
               required
             />
           </div>
@@ -111,7 +131,9 @@ const Form = (props) => {
               name="asset tag"
               type="number"
               value={formData.assetTagNumber}
-              onChange={(event) => inputChangedHandler(event, "assetTagNumber")}
+              onChange={(event) =>
+                inputNumberChangedHandler(event, "assetTagNumber")
+              }
               required
             />
           </div>
@@ -121,7 +143,9 @@ const Form = (props) => {
               name="PCEP tag"
               type="number"
               value={formData.PCEPTagNumber}
-              onChange={(event) => inputChangedHandler(event, "PCEPTagNumber")}
+              onChange={(event) =>
+                inputNumberChangedHandler(event, "PCEPTagNumber")
+              }
               required
             />
           </div>
@@ -131,7 +155,7 @@ const Form = (props) => {
               name="Price"
               type="number"
               value={formData.price}
-              onChange={(event) => inputChangedHandler(event, "price")}
+              onChange={(event) => inputNumberChangedHandler(event, "price")}
               required
             />
           </div>
@@ -141,19 +165,13 @@ const Form = (props) => {
               name="quantity"
               type="number"
               value={formData.number}
-              onChange={(event) => inputChangedHandler(event, "number")}
+              onChange={(event) => inputNumberChangedHandler(event, "number")}
               required
             />
           </div>
           <div className={classes.control}>
             <label htmlFor="total price">Total Price</label>
-            <input
-              name="total price"
-              type="number"
-              value={formData.number * formData.price}
-              onChange={(event) => inputChangedHandler(event, "totalPrice")}
-              required
-            />
+            <h2>${formData.price * formData.number}</h2>
           </div>
           <div className={classes.control}>
             <label htmlFor="Info">Other Important Information</label>

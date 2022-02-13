@@ -8,7 +8,7 @@
   margin: 50px 70px;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1600px) {
   .dataWrap {
     width: 100%;
   }
@@ -55,6 +55,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-top: 2rem;
+  border: 5px solid #77002e;
+  border-radius: 5%;
+  padding: 5px;
+}
+
+.mainDataFormWrapper:nth-child(1){
+  margin-top: 0;
 }
 
 .mainDataFormWrapper input
@@ -65,9 +73,9 @@
   width: 200px;
 }
 
-@media (max-width: 1000px) {
-  .headingFormWrapper > input {
-    width: 100px;
+@media (max-width: 900px) {
+  .mainDataFormWrapper  input {
+    max-width: 100px;
   }
 }
 
