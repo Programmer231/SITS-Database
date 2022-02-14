@@ -9,9 +9,8 @@ const DisplayData = (props) => {
   const [undefinedState, setUndefinedState] = useState([]);
   const [clickedState, setClickedState] = useState({});
   const [descriptionClicked, setDescriptionState] = useState(false);
-  const [serialClicked, setSerialClicked] = useState(false);
-  const [assetTagClicked, setAssetTagClicked] = useState(false);
-  const [PCEPTagClicked, setPCEPTagClicked] = useState(false);
+  const [purposeClicked, setPurposeClicked] = useState(false);
+  const [typeClicked, setTypeClicked] = useState(false);
 
   const [updatedFormData, setUpdatedFormData] = useState({
     part: props.mySearchedInfo.part || "",
@@ -28,6 +27,14 @@ const DisplayData = (props) => {
   const descClickedHandler = () => {
     setDescriptionState((prevState) => !prevState);
   };
+
+  const purposeClickedHandler = () => {
+    setPurposeClicked((prevState) => !prevState);
+  }
+
+  const typeClickedHandler = () => {
+    setTypeClicked((prevState) => !prevState);
+  }
 
   const inputStringChangedHandler = (event, name) => {
     setUpdatedFormData((prevState) => {
@@ -185,6 +192,32 @@ const DisplayData = (props) => {
               {descriptionClicked ? (
                 <h4 className={classes.textFieldStyles}>
                   {props.mySearchedInfo.description}
+                </h4>
+              ) : null}
+            </div>
+            <div className={classes.description}>
+              <h1
+                className={classes.description_header}
+                onClick={purposeClickedHandler}
+              >
+                Purpose:
+              </h1>
+              {purposeClicked ? (
+                <h4 className={classes.textFieldStyles}>
+                  {props.mySearchedInfo.purpose}
+                </h4>
+              ) : null}
+            </div>
+            <div className={classes.description}>
+              <h1
+                className={classes.description_header}
+                onClick={typeClickedHandler}
+              >
+                Type:
+              </h1>
+              {typeClicked ? (
+                <h4 className={classes.textFieldStyles}>
+                  {props.mySearchedInfo.type}
                 </h4>
               ) : null}
             </div>

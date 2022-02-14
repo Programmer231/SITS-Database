@@ -61,12 +61,11 @@
   padding: 5px;
 }
 
-.mainDataFormWrapper:nth-child(1){
+.mainDataFormWrapper:nth-child(1) {
   margin-top: 0;
 }
 
-.mainDataFormWrapper input
- {
+.mainDataFormWrapper input {
   border: none;
   font-weight: bold;
   font-size: 1em;
@@ -74,7 +73,7 @@
 }
 
 @media (max-width: 900px) {
-  .mainDataFormWrapper  input {
+  .mainDataFormWrapper input {
     max-width: 100px;
   }
 }
@@ -82,6 +81,11 @@
 .description {
   text-align: center;
   cursor: pointer;
+  margin-top: 50px;
+}
+
+.description:last-child {
+  margin-bottom: 50px;
 }
 
 .description_header {
@@ -93,4 +97,8 @@
   margin: 0;
   padding: 0;
   font-size: 2rem;
+}
+
+.textFieldStyles {
+  cursor: auto;
 }

@@ -114,6 +114,28 @@ const Form = (props) => {
             />
           </div>
           <div className={classes.control}>
+            <label htmlFor="type">Type</label>
+            <input
+              name="type"
+              type="text"
+              value={formData.type}
+              onChange={(event) =>
+                inputStringChangedHandler(event, "type")
+              }
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="purpose">Purpose</label>
+            <input
+              name="purpose"
+              type="text"
+              value={formData.purpose}
+              onChange={(event) =>
+                inputStringChangedHandler(event, "purpose")
+              }
+            />
+          </div>
+          <div className={classes.control}>
             <label htmlFor="serial">Serial Number</label>
             <input
               name="serial"
