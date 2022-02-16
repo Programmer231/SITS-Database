@@ -25,7 +25,7 @@ const Form = (props) => {
     price: 0,
     PCEPTagNumber: 0,
     assetTagNumber: 0,
-    serialNumber: 0,
+    serialNumber: "",
     purpose: "",
     type: "",
   });
@@ -62,7 +62,7 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
+    fetch("https://sits-practice-default-rtdb.firebaseio.com/School.json", {
       method: "POST",
       body: JSON.stringify({ ...formData, ...checkedData }),
       headers: {
@@ -76,7 +76,7 @@ const Form = (props) => {
         price: 0,
         PCEPTagNumber: 0,
         assetTagNumber: 0,
-        serialNumber: 0,
+        serialNumber: "",
         purpose: "",
         type: "",
       });
@@ -117,12 +117,11 @@ const Form = (props) => {
             <label htmlFor="serial">Serial Number</label>
             <input
               name="serial"
-              type="number"
+              type="text"
               value={formData.serialNumber}
               onChange={(event) =>
-                inputNumberChangedHandler(event, "serialNumber")
+                inputStringChangedHandler(event, "serialNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -134,7 +133,6 @@ const Form = (props) => {
               onChange={(event) =>
                 inputNumberChangedHandler(event, "assetTagNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -146,7 +144,6 @@ const Form = (props) => {
               onChange={(event) =>
                 inputNumberChangedHandler(event, "PCEPTagNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -156,7 +153,6 @@ const Form = (props) => {
               type="number"
               value={formData.price}
               onChange={(event) => inputNumberChangedHandler(event, "price")}
-              required
             />
           </div>
           <div className={classes.control}>
@@ -166,7 +162,24 @@ const Form = (props) => {
               type="number"
               value={formData.number}
               onChange={(event) => inputNumberChangedHandler(event, "number")}
-              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="serial">Purpose</label>
+            <input
+              name="serial"
+              type="text"
+              value={formData.purpose}
+              onChange={(event) => inputStringChangedHandler(event, "purpose")}
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="serial">Type</label>
+            <input
+              name="serial"
+              type="text"
+              value={formData.type}
+              onChange={(event) => inputStringChangedHandler(event, "type")}
             />
           </div>
           <div className={classes.control}>

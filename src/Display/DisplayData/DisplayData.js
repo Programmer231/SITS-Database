@@ -9,9 +9,8 @@ const DisplayData = (props) => {
   const [undefinedState, setUndefinedState] = useState([]);
   const [clickedState, setClickedState] = useState({});
   const [descriptionClicked, setDescriptionState] = useState(false);
-  const [serialClicked, setSerialClicked] = useState(false);
-  const [assetTagClicked, setAssetTagClicked] = useState(false);
-  const [PCEPTagClicked, setPCEPTagClicked] = useState(false);
+  const [purposeClicked, setPurposeClicked] = useState(false);
+  const [typeClicked, setTypeClicked] = useState(false);
 
   const [updatedFormData, setUpdatedFormData] = useState({
     part: props.mySearchedInfo.part || "",
@@ -20,13 +19,21 @@ const DisplayData = (props) => {
     price: props.mySearchedInfo.price || 0,
     PCEPTagNumber: props.mySearchedInfo.PCEPTagNumber || 0,
     assetTagNumber: props.mySearchedInfo.assetTagNumber || 0,
-    serialNumber: props.mySearchedInfo.serialNumber || 0,
+    serialNumber: props.mySearchedInfo.serialNumber || "",
     purpose: props.mySearchedInfo.purpose || "",
     type: props.mySearchedInfo.type || "",
   });
 
   const descClickedHandler = () => {
     setDescriptionState((prevState) => !prevState);
+  };
+
+  const purposeClickedHandler = () => {
+    setPurposeClicked((prevState) => !prevState);
+  };
+
+  const typeClickedHandler = () => {
+    setTypeClicked((prevState) => !prevState);
   };
 
   const inputStringChangedHandler = (event, name) => {
@@ -93,7 +100,7 @@ const DisplayData = (props) => {
     }
 
     fetch(
-      `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.id}/.json`,
+      `https://sits-practice-default-rtdb.firebaseio.com/School${props.mySearchedInfo.id}/.json`,
       {
         method: "PATCH",
         body: JSON.stringify(finalData),
@@ -168,10 +175,10 @@ const DisplayData = (props) => {
               <label htmlFor="serial">Serial Number: </label>
               <input
                 name="serial"
-                type="number"
+                type="text"
                 value={updatedFormData.serialNumber}
                 onChange={(event) =>
-                  inputNumberChangedHandler(event, "serialNumber")
+                  inputStringChangedHandler(event, "serialNumber")
                 }
               />
             </div>
@@ -187,6 +194,32 @@ const DisplayData = (props) => {
                   {props.mySearchedInfo.description}
                 </h4>
               ) : null}
+              <div className={classes.description}>
+                <h1
+                  className={classes.description_header}
+                  onClick={purposeClickedHandler}
+                >
+                  Purpose:
+                </h1>
+                {purposeClicked ? (
+                  <h4 className={classes.textFieldStyles}>
+                    {props.mySearchedInfo.description}
+                  </h4>
+                ) : null}
+              </div>
+              <div className={classes.description}>
+                <h1
+                  className={classes.description_header}
+                  onClick={typeClickedHandler}
+                >
+                  Type:
+                </h1>
+                {typeClicked ? (
+                  <h4 className={classes.textFieldStyles}>
+                    {props.mySearchedInfo.type}
+                  </h4>
+                ) : null}
+              </div>
             </div>
           </div>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>

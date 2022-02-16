@@ -16,7 +16,41 @@ const AddField = () => {
 
   const [searchPart, setSearchPart] = useState({ part: "" });
 
-  const [partInfo, setPartInfo] = useState([]);
+  const [partSchoolInfo, setPartSchoolInfo] = useState([]);
+  const [partSITSInfo, setPartSITSInfo] = useState([]);
+
+  useEffect(() => {
+    let partSchoolData = [];
+    let partSITSData = [];
+
+    fetch("https://sits-practice-default-rtdb.firebaseio.com/School.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        for (let key in data) {
+          if (!data[key].part) {
+            continue;
+          }
+          partSchoolData.push({ id: key, ...data[key] });
+        }
+        setPartSchoolInfo(partSchoolData);
+      });
+
+    fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        for (let key in data) {
+          if (!data[key].part) {
+            continue;
+          }
+          partSITSData.push({ id: key, ...data[key] });
+        }
+        setPartSITSInfo(partSITSData);
+      });
+  }, []);
 
   const addFieldCheckboxChangedHandler = (name) => {
     setAddField((prevState) => {
@@ -56,53 +90,17 @@ const AddField = () => {
     });
   };
 
-  const submitSearchForm = () => {
-    let partData = [];
-    let query = `?orderBy="part"&indexOn="brand"&equalTo="${searchPart.part}"`;
-    if (searchPart.part.length === 0) {
-      fetch("https://sits-practice-default-rtdb.firebaseio.com/.json")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          for (let key in data) {
-            if (!data[key].part) {
-              continue;
-            }
-            partData.push({ id: key, ...data[key] });
-          }
-          setPartInfo(partData);
-          setSearchPart({ part: "" });
-        });
-    } else {
-      fetch("https://sits-practice-default-rtdb.firebaseio.com/.json" + query)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          for (let key in data) {
-            partData.push({ id: key, ...data[key] });
-          }
-          setPartInfo(partData);
-          setSearchPart({ part: "" });
-        });
-    }
-  };
-
   const inputChangedHandler = (event) => {
     setAddField({
       type: event.target.value,
     });
   };
 
-  const submitSearchHandler = (event) => {
-    event.preventDefault();
-    submitSearchForm();
-  };
-
   const displayDataHandler = (event) => {
     setSearchPart({ part: event.target.value });
   };
+
+  const searchHandler = () => {};
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -182,14 +180,15 @@ const AddField = () => {
       >
         Data
       </h1>
-
       <DisplayField
+        searchHandler={searchHandler}
         inputChangedHandler={displayDataHandler}
         formData={searchPart}
-        searchHandler={submitSearchHandler}
-        searchedInfo={partInfo}
+        searchedSchoolInfo={partSchoolInfo}
+        searchedSITSInfo={partSITSInfo}
         certifications={certificationState}
-        setSearchedInfo={setPartInfo}
+        setSearchedSchoolInfo={setPartSchoolInfo}
+        setSearchedSITSInfo={setPartSITSInfo}
       />
     </div>
   );
