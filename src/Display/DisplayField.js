@@ -86,6 +86,18 @@ const DisplayField = (props) => {
           </form>
         </div>
       </Card>
+
+      <h1
+        style={{
+          display: "block",
+          textDecoration: "underline",
+          textAlign: "center",
+          width: "100%",
+          marginTop: "500px",
+        }}
+      >
+        School Data
+      </h1>
       <div className={classes.dataFlex}>
         {numberElements.length === props.searchedSchoolInfo.length
           ? props.searchedSchoolInfo.map((part, index) => {
@@ -100,8 +112,20 @@ const DisplayField = (props) => {
               );
             })
           : null}
+      </div>
 
-        <h1>SITS Data</h1>
+      <h1
+        style={{
+          display: "block",
+          textDecoration: "underline",
+          textAlign: "center",
+          width: "100%",
+          marginTop: "500px",
+        }}
+      >
+        SITS Data
+      </h1>
+      <div className={classes.dataFlex}>
         {numberSITSElements.length === props.searchedSITSInfo.length
           ? props.searchedSITSInfo.map((part, index) => {
               return (
