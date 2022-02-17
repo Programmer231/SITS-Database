@@ -1,16 +1,17 @@
 .wrap {
-	padding: 20px;
+  padding: 20px;
 }
 
 .cardWrap {
-	width: 80%;
-	margin:auto;
+  width: 100%;
+  margin: auto;
+  margin-top: 50px;
 }
 
 .dataFlex {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	flex-wrap: wrap;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }

@@ -1,9 +1,10 @@
 import Card from "../UI/Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import classes from "./AddField.module.css";
 import extraClasses from "../Form/NewMeetupForm.module.css";
 import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
+import moreClasses from "../Display/DisplayField.module.css";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -18,6 +19,16 @@ const AddField = () => {
 
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
   const [partSITSInfo, setPartSITSInfo] = useState([]);
+
+  const searchRef = useRef('');
+
+  useEffect(() => {
+    searchRef = searchPart.part;
+    setTimeout(() => {
+      if(searchRef === searchPart.part){
+      }
+    }, 1000)
+  }, [searchPart, searchRef])
 
   useEffect(() => {
     let partSchoolData = [];
@@ -170,6 +181,22 @@ const AddField = () => {
             </form>
           </div>
         </Card>
+        <div className = {classes.spaceOutSearchField}>
+        <Card>
+        <div className={moreClasses.wrap}>
+          <form onSubmit={(event) => searchHandler(event)}>
+            <div className={classes.control}>
+              <label htmlFor="Part">Search a Part:</label>
+              <input
+                type="text"
+                value={searchPart.part}
+                onChange={(event) => inputChangedHandler(event)}
+              />
+            </div>
+          </form>
+        </div>
+      </Card>
+      </div>
       </div>
       <h1
         style={{

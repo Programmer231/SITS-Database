@@ -1,7 +1,5 @@
 import classes from "./DisplayField.module.css";
 import { useEffect, useState } from "react";
-import Card from "../UI/Card";
-import extraClasses from "../Form/NewMeetupForm.module.css";
 import DisplayData from "./DisplayData/DisplayData";
 
 const DisplayField = (props) => {
@@ -72,20 +70,7 @@ const DisplayField = (props) => {
 
   return (
     <div className={classes.cardWrap}>
-      <Card>
-        <div className={classes.wrap}>
-          <form onSubmit={(event) => props.searchHandler(event)}>
-            <div className={extraClasses.control}>
-              <label htmlFor="Part">Search a Part:</label>
-              <input
-                type="text"
-                value={props.formData.part}
-                onChange={(event) => props.inputChangedHandler(event)}
-              />
-            </div>
-          </form>
-        </div>
-      </Card>
+
 
       <h1
         style={{
