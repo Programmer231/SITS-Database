@@ -19,7 +19,7 @@ const DisplayData = (props) => {
     price: props.mySearchedInfo.price || 0,
     PCEPTagNumber: props.mySearchedInfo.PCEPTagNumber || 0,
     assetTagNumber: props.mySearchedInfo.assetTagNumber || 0,
-    serialNumber: props.mySearchedInfo.serialNumber || 0,
+    serialNumber: props.mySearchedInfo.serialNumber || "",
     purpose: props.mySearchedInfo.purpose || "",
     type: props.mySearchedInfo.type || "",
   });
@@ -30,6 +30,7 @@ const DisplayData = (props) => {
 
   const purposeClickedHandler = () => {
     setPurposeClicked((prevState) => !prevState);
+
   }
 
   const typeClickedHandler = () => {
@@ -43,7 +44,6 @@ const DisplayData = (props) => {
         [name]: event.target.value,
       };
     });
-    console.log(event);
   };
 
   const inputNumberChangedHandler = (event, name) => {
@@ -53,7 +53,6 @@ const DisplayData = (props) => {
         [name]: event.target.valueAsNumber,
       };
     });
-    console.log(event);
   };
 
   const { definedValues, undefinedValues, mySearchedInfo } = props;
@@ -100,7 +99,7 @@ const DisplayData = (props) => {
     }
 
     fetch(
-      `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.id}/.json`,
+      `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.type}/${props.mySearchedInfo.id}/.json`,
       {
         method: "PATCH",
         body: JSON.stringify(finalData),
@@ -122,7 +121,7 @@ const DisplayData = (props) => {
               <input
                 name="number"
                 type="number"
-                value={updatedFormData.number}
+                value={updatedFormData.number || 0}
                 onChange={(event) => inputNumberChangedHandler(event, "number")}
               />
             </div>
@@ -134,7 +133,7 @@ const DisplayData = (props) => {
                   className={classes.money}
                   name="price"
                   type="number"
-                  value={updatedFormData.price}
+                  value={updatedFormData.price || 0}
                   onChange={(event) =>
                     inputNumberChangedHandler(event, "price")
                   }
@@ -145,7 +144,7 @@ const DisplayData = (props) => {
               <label htmlFor="total price">Total Price: </label>
               <div>
                 <h1 className={classes.priceHeadings}>
-                  ${updatedFormData.price * updatedFormData.number}
+                  ${updatedFormData.price * updatedFormData.number || 0}
                 </h1>
               </div>
             </div>
@@ -154,7 +153,7 @@ const DisplayData = (props) => {
               <input
                 name="PCEP tag"
                 type="number"
-                value={updatedFormData.PCEPTagNumber}
+                value={updatedFormData.PCEPTagNumber || 0}
                 onChange={(event) =>
                   inputNumberChangedHandler(event, "PCEPTagNumber")
                 }
@@ -165,7 +164,7 @@ const DisplayData = (props) => {
               <input
                 name="asset tag"
                 type="number"
-                value={updatedFormData.assetTagNumber}
+                value={updatedFormData.assetTagNumber || 0}
                 onChange={(event) =>
                   inputNumberChangedHandler(event, "assetTagNumber")
                 }
@@ -175,10 +174,10 @@ const DisplayData = (props) => {
               <label htmlFor="serial">Serial Number: </label>
               <input
                 name="serial"
-                type="number"
-                value={updatedFormData.serialNumber}
+                type="text"
+                value={updatedFormData.serialNumber || ''}
                 onChange={(event) =>
-                  inputNumberChangedHandler(event, "serialNumber")
+                  inputStringChangedHandler(event, "serialNumber")
                 }
               />
             </div>
@@ -194,33 +193,34 @@ const DisplayData = (props) => {
                   {props.mySearchedInfo.description}
                 </h4>
               ) : null}
+              <div className={classes.description}>
+                <h1
+                  className={classes.description_header}
+                  onClick={purposeClickedHandler}
+                >
+                  Purpose:
+                </h1>
+                {purposeClicked ? (
+                  <h4 className={classes.textFieldStyles}>
+                    {props.mySearchedInfo.description}
+                  </h4>
+                ) : null}
+              </div>
+              <div className={classes.description}>
+                <h1
+                  className={classes.description_header}
+                  onClick={typeClickedHandler}
+                >
+                  Type:
+                </h1>
+                {typeClicked ? (
+                  <h4 className={classes.textFieldStyles}>
+                    {props.mySearchedInfo.type}
+                  </h4>
+                ) : null}
+              </div>
             </div>
-            <div className={classes.description}>
-              <h1
-                className={classes.description_header}
-                onClick={purposeClickedHandler}
-              >
-                Purpose:
-              </h1>
-              {purposeClicked ? (
-                <h4 className={classes.textFieldStyles}>
-                  {props.mySearchedInfo.purpose}
-                </h4>
-              ) : null}
-            </div>
-            <div className={classes.description}>
-              <h1
-                className={classes.description_header}
-                onClick={typeClickedHandler}
-              >
-                Type:
-              </h1>
-              {typeClicked ? (
-                <h4 className={classes.textFieldStyles}>
-                  {props.mySearchedInfo.type}
-                </h4>
-              ) : null}
-            </div>
+            
           </div>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>
           {definedState.map((value) => {

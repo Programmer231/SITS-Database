@@ -25,7 +25,7 @@ const Form = (props) => {
     price: 0,
     PCEPTagNumber: 0,
     assetTagNumber: 0,
-    serialNumber: 0,
+    serialNumber: "",
     purpose: "",
     type: "",
   });
@@ -62,7 +62,7 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/.json", {
+    fetch("https://sits-practice-default-rtdb.firebaseio.com/School.json", {
       method: "POST",
       body: JSON.stringify({ ...formData, ...checkedData }),
       headers: {
@@ -76,7 +76,7 @@ const Form = (props) => {
         price: 0,
         PCEPTagNumber: 0,
         assetTagNumber: 0,
-        serialNumber: 0,
+        serialNumber: "",
         purpose: "",
         type: "",
       });
@@ -97,7 +97,7 @@ const Form = (props) => {
             <input
               name="Part"
               type="text"
-              value={formData.part}
+              value={formData.part || ''}
               onChange={(event) => inputStringChangedHandler(event, "part")}
               required
             />
@@ -107,31 +107,9 @@ const Form = (props) => {
             <input
               name="description"
               type="text"
-              value={formData.description}
+              value={formData.description || ''}
               onChange={(event) =>
                 inputStringChangedHandler(event, "description")
-              }
-            />
-          </div>
-          <div className={classes.control}>
-            <label htmlFor="type">Type</label>
-            <input
-              name="type"
-              type="text"
-              value={formData.type}
-              onChange={(event) =>
-                inputStringChangedHandler(event, "type")
-              }
-            />
-          </div>
-          <div className={classes.control}>
-            <label htmlFor="purpose">Purpose</label>
-            <input
-              name="purpose"
-              type="text"
-              value={formData.purpose}
-              onChange={(event) =>
-                inputStringChangedHandler(event, "purpose")
               }
             />
           </div>
@@ -139,12 +117,11 @@ const Form = (props) => {
             <label htmlFor="serial">Serial Number</label>
             <input
               name="serial"
-              type="number"
-              value={formData.serialNumber}
+              type="text"
+              value={formData.serialNumber || ""}
               onChange={(event) =>
-                inputNumberChangedHandler(event, "serialNumber")
+                inputStringChangedHandler(event, "serialNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -152,11 +129,10 @@ const Form = (props) => {
             <input
               name="asset tag"
               type="number"
-              value={formData.assetTagNumber}
+              value={formData.assetTagNumber || 0}
               onChange={(event) =>
                 inputNumberChangedHandler(event, "assetTagNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -164,11 +140,10 @@ const Form = (props) => {
             <input
               name="PCEP tag"
               type="number"
-              value={formData.PCEPTagNumber}
+              value={formData.PCEPTagNumber || 0}
               onChange={(event) =>
                 inputNumberChangedHandler(event, "PCEPTagNumber")
               }
-              required
             />
           </div>
           <div className={classes.control}>
@@ -176,9 +151,8 @@ const Form = (props) => {
             <input
               name="Price"
               type="number"
-              value={formData.price}
+              value={formData.price || 0}
               onChange={(event) => inputNumberChangedHandler(event, "price")}
-              required
             />
           </div>
           <div className={classes.control}>
@@ -186,9 +160,26 @@ const Form = (props) => {
             <input
               name="quantity"
               type="number"
-              value={formData.number}
+              value={formData.number || 0}
               onChange={(event) => inputNumberChangedHandler(event, "number")}
-              required
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="serial">Purpose</label>
+            <input
+              name="serial"
+              type="text"
+              value={formData.purpose || ""}
+              onChange={(event) => inputStringChangedHandler(event, "purpose")}
+            />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="serial">Type</label>
+            <input
+              name="serial"
+              type="text"
+              value={formData.type || ""}
+              onChange={(event) => inputStringChangedHandler(event, "type")}
             />
           </div>
           <div className={classes.control}>
