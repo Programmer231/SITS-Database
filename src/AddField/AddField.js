@@ -20,15 +20,51 @@ const AddField = () => {
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
   const [partSITSInfo, setPartSITSInfo] = useState([]);
 
-  const searchRef = useRef('');
+  const searchRef = useRef();
+  const partSchoolDataConstant = useRef();
+  const partSITSDataConstant = useRef();
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    searchRef = searchPart.part;
-    setTimeout(() => {
-      if(searchRef === searchPart.part){
-      }
-    }, 1000)
-  }, [searchPart, searchRef])
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      const timer = setTimeout(() => {
+        if (searchPart.part === searchRef.current.value) {
+          let newDataSchoolInfo = [];
+          let newDataSITSInfo = [];
+          console.log(partSchoolDataConstant.current);
+          for (let x of partSchoolDataConstant.current) {
+            console.log(x);
+            console.log(
+              x["part"].substring(0, searchPart.part.length).toLowerCase()
+            );
+            console.log(searchRef.current.value.toLowerCase());
+            if (
+              x["part"].substring(0, searchPart.part.length).toLowerCase() ===
+              searchRef.current.value.toLowerCase()
+            ) {
+              newDataSchoolInfo.push(x);
+            }
+          }
+          for (let y of partSITSDataConstant.current) {
+            if (
+              y["part"].substring(0, searchPart.part.length).toLowerCase() ===
+              searchRef.current.value.toLowerCase()
+            ) {
+              newDataSITSInfo.push(y);
+            }
+          }
+          setPartSchoolInfo(newDataSchoolInfo);
+          setPartSITSInfo(newDataSITSInfo);
+        }
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [searchPart, searchRef, partSchoolDataConstant, partSITSDataConstant]);
 
   useEffect(() => {
     let partSchoolData = [];
@@ -46,6 +82,7 @@ const AddField = () => {
           partSchoolData.push({ id: key, ...data[key] });
         }
         setPartSchoolInfo(partSchoolData);
+        partSchoolDataConstant.current = [...partSchoolData];
       });
 
     fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS.json")
@@ -60,6 +97,7 @@ const AddField = () => {
           partSITSData.push({ id: key, ...data[key] });
         }
         setPartSITSInfo(partSITSData);
+        partSITSDataConstant.current = [...partSITSData];
       });
   }, []);
 
@@ -107,11 +145,17 @@ const AddField = () => {
     });
   };
 
+  const searchHandler = () => {};
+
+  const searchPartChangedHandler = (event) => {
+    setSearchPart({
+      part: event.target.value,
+    });
+  };
+
   const displayDataHandler = (event) => {
     setSearchPart({ part: event.target.value });
   };
-
-  const searchHandler = () => {};
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -181,22 +225,23 @@ const AddField = () => {
             </form>
           </div>
         </Card>
-        <div className = {classes.spaceOutSearchField}>
-        <Card>
-        <div className={moreClasses.wrap}>
-          <form onSubmit={(event) => searchHandler(event)}>
-            <div className={classes.control}>
-              <label htmlFor="Part">Search a Part:</label>
-              <input
-                type="text"
-                value={searchPart.part}
-                onChange={(event) => inputChangedHandler(event)}
-              />
+        <div className={classes.spaceOutSearchField}>
+          <Card>
+            <div className={moreClasses.wrap}>
+              <form onSubmit={(event) => searchHandler(event)}>
+                <div className={classes.control}>
+                  <label htmlFor="Part">Search a Part:</label>
+                  <input
+                    type="text"
+                    value={searchPart.part}
+                    onChange={(event) => searchPartChangedHandler(event)}
+                    ref={searchRef}
+                  />
+                </div>
+              </form>
             </div>
-          </form>
+          </Card>
         </div>
-      </Card>
-      </div>
       </div>
       <h1
         style={{
@@ -207,17 +252,17 @@ const AddField = () => {
       >
         Data
       </h1>
-      { 
-      <DisplayField
-        searchHandler={searchHandler}
-        inputChangedHandler={displayDataHandler}
-        formData={searchPart}
-        searchedSchoolInfo={partSchoolInfo}
-        searchedSITSInfo={partSITSInfo}
-        certifications={certificationState}
-        setSearchedSchoolInfo={setPartSchoolInfo}
-        setSearchedSITSInfo={setPartSITSInfo}
-      />
+      {
+        <DisplayField
+          searchHandler={searchHandler}
+          inputChangedHandler={displayDataHandler}
+          formData={searchPart}
+          searchedSchoolInfo={partSchoolInfo}
+          searchedSITSInfo={partSITSInfo}
+          certifications={certificationState}
+          setSearchedSchoolInfo={setPartSchoolInfo}
+          setSearchedSITSInfo={setPartSITSInfo}
+        />
       }
     </div>
   );
