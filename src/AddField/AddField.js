@@ -33,27 +33,25 @@ const AddField = () => {
         if (searchPart.part === searchRef.current.value) {
           let newDataSchoolInfo = [];
           let newDataSITSInfo = [];
-          console.log(partSchoolDataConstant.current);
           for (let x of partSchoolDataConstant.current) {
-            console.log(x);
-            console.log(
-              x["part"].substring(0, searchPart.part.length).toLowerCase()
-            );
-            console.log(searchRef.current.value.toLowerCase());
-            if (
-              x["part"].substring(0, searchPart.part.length).toLowerCase() ===
-              searchRef.current.value.toLowerCase()
-            ) {
-              newDataSchoolInfo.push(x);
-            }
+            x.part.split(" ").forEach((word) => {
+              if (
+                word.substring(0, searchPart.part.length).toLowerCase() ===
+                searchRef.current.value.toLowerCase()
+              ) {
+                newDataSchoolInfo.push(x);
+              }
+            });
           }
           for (let y of partSITSDataConstant.current) {
-            if (
-              y["part"].substring(0, searchPart.part.length).toLowerCase() ===
-              searchRef.current.value.toLowerCase()
-            ) {
-              newDataSITSInfo.push(y);
-            }
+            y.part.split(" ").forEach((word) => {
+              if (
+                word.substring(0, searchPart.part.length).toLowerCase() ===
+                searchRef.current.value.toLowerCase()
+              ) {
+                newDataSITSInfo.push(y);
+              }
+            });
           }
           setPartSchoolInfo(newDataSchoolInfo);
           setPartSITSInfo(newDataSITSInfo);
