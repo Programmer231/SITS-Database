@@ -5,6 +5,7 @@ import extraClasses from "../Form/NewMeetupForm.module.css";
 import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
+import {v4 as uuid} from 'uuid';
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -81,7 +82,7 @@ const AddField = () => {
           if (!data[key].part) {
             continue;
           }
-          partSchoolData.push({ id: key, ...data[key] });
+          partSchoolData.push({ id: uuid(), ...data[key] });
         }
         setPartSchoolInfo(partSchoolData);
         partSchoolDataConstant.current = [...partSchoolData];
@@ -96,7 +97,7 @@ const AddField = () => {
           if (!data[key].part) {
             continue;
           }
-          partSITSData.push({ id: key, ...data[key] });
+          partSITSData.push({ id: uuid(), ...data[key] });
         }
         setPartSITSInfo(partSITSData);
         partSITSDataConstant.current = [...partSITSData];
@@ -132,7 +133,7 @@ const AddField = () => {
         })
         .then((data) => {
           for (let key in data) {
-            certificationData.push({ id: key, ...data[key] });
+            certificationData.push({ id: uuid(), ...data[key] });
           }
 
           setCertificationState(certificationData);
@@ -174,7 +175,7 @@ const AddField = () => {
       })
       .then((data) => {
         for (let key in data) {
-          certificationData.push({ id: key, ...data[key] });
+          certificationData.push({ id: uuid(), ...data[key] });
         }
 
         setCertificationState(certificationData);
