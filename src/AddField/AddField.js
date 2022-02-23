@@ -34,27 +34,31 @@ const AddField = () => {
           let newDataSchoolInfo = [];
           let newDataSITSInfo = [];
           for (let x of partSchoolDataConstant.current) {
-            x.part.split(" ").forEach((word) => {
+            for(let word of x.part.split(" ")){
               if (
                 word.substring(0, searchPart.part.length).toLowerCase() ===
                 searchRef.current.value.toLowerCase()
               ) {
                 newDataSchoolInfo.push(x);
+                break;
               }
-            });
+            };
           }
           for (let y of partSITSDataConstant.current) {
-            y.part.split(" ").forEach((word) => {
+            for(let word of y.part.split(" ")) {
               if (
                 word.substring(0, searchPart.part.length).toLowerCase() ===
                 searchRef.current.value.toLowerCase()
               ) {
                 newDataSITSInfo.push(y);
+                break;
               }
-            });
+            };
           }
-          setPartSchoolInfo(newDataSchoolInfo);
-          setPartSITSInfo(newDataSITSInfo);
+          setPartSchoolInfo([...newDataSchoolInfo]);
+          setPartSITSInfo([...newDataSITSInfo]);
+          newDataSchoolInfo = [];
+          newDataSITSInfo = [];
         }
       }, 1000);
 
