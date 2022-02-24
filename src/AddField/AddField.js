@@ -36,20 +36,23 @@ const AddField = () => {
           let newDataSITSInfo = [];
           for (let x of partSchoolDataConstant.current) {
             for(let word of x.part.split(" ")){
-              if (
-                word.substring(0, searchPart.part.length).toLowerCase() ===
-                searchRef.current.value.toLowerCase()
-              ) {
-                newDataSchoolInfo.push(x);
-                break;
+              for(let letter = 0; letter < word.length; letter ++){
+                console.log(word.substring(letter, searchRef.current.value.trim().length).toLowerCase());
+                if (
+                  word.substring(letter, searchRef.current.value.trim().length).toLowerCase() ===
+                  searchRef.current.value.trim().toLowerCase()
+                ) {
+                  newDataSchoolInfo.push(x);
+                  break;
+                }
               }
             };
           }
           for (let y of partSITSDataConstant.current) {
             for(let word of y.part.split(" ")) {
               if (
-                word.substring(0, searchPart.part.length).toLowerCase() ===
-                searchRef.current.value.toLowerCase()
+                word.substring(0, searchPart.part.trim().length).toLowerCase() ===
+                searchRef.current.value.trim().toLowerCase()
               ) {
                 newDataSITSInfo.push(y);
                 break;
@@ -148,8 +151,6 @@ const AddField = () => {
     });
   };
 
-  const searchHandler = () => {};
-
   const searchPartChangedHandler = (event) => {
     setSearchPart({
       part: event.target.value,
@@ -231,7 +232,6 @@ const AddField = () => {
         <div className={classes.spaceOutSearchField}>
           <Card>
             <div className={moreClasses.wrap}>
-              <form onSubmit={(event) => searchHandler(event)}>
                 <div className={classes.control}>
                   <label htmlFor="Part">Search a Part:</label>
                   <input
@@ -241,7 +241,6 @@ const AddField = () => {
                     ref={searchRef}
                   />
                 </div>
-              </form>
             </div>
           </Card>
         </div>
@@ -257,7 +256,6 @@ const AddField = () => {
       </h1>
       {
         <DisplayField
-          searchHandler={searchHandler}
           inputChangedHandler={displayDataHandler}
           formData={searchPart}
           searchedSchoolInfo={partSchoolInfo}
