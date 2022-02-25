@@ -202,7 +202,7 @@ const DisplayData = (props) => {
                 </h1>
                 {purposeClicked ? (
                   <h4 className={classes.textFieldStyles}>
-                    {props.mySearchedInfo.description}
+                    {props.mySearchedInfo.purpose}
                   </h4>
                 ) : null}
               </div>
