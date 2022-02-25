@@ -34,27 +34,40 @@ const AddField = () => {
         if (searchPart.part === searchRef.current.value) {
           let newDataSchoolInfo = [];
           let newDataSITSInfo = [];
+          let counter = false;
+          let SITSCounter = false;
           for (let x of partSchoolDataConstant.current) {
             for(let word of x.part.split(" ")){
               for(let letter = 0; letter < word.length; letter ++){
-                console.log(word.substring(letter, searchRef.current.value.trim().length).toLowerCase());
                 if (
-                  word.substring(letter, searchRef.current.value.trim().length).toLowerCase() ===
+                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
                   searchRef.current.value.trim().toLowerCase()
                 ) {
                   newDataSchoolInfo.push(x);
+                  counter = true;
                   break;
                 }
+              }
+              if(counter){
+                counter = false;
+                break;
               }
             };
           }
           for (let y of partSITSDataConstant.current) {
             for(let word of y.part.split(" ")) {
-              if (
-                word.substring(0, searchPart.part.trim().length).toLowerCase() ===
-                searchRef.current.value.trim().toLowerCase()
-              ) {
-                newDataSITSInfo.push(y);
+              for(let letter = 0; letter < word.length; letter ++){
+                if (
+                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
+                  searchRef.current.value.trim().toLowerCase()
+                ) {
+                  newDataSITSInfo.push(y);
+                  SITSCounter = true;
+                  break;
+                }
+              }
+              if(SITSCounter){
+                SITSCounter = false;
                 break;
               }
             };
