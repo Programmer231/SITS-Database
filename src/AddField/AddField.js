@@ -5,6 +5,7 @@ import extraClasses from "../Form/NewMeetupForm.module.css";
 import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
+import mainFilter from "../Filter/mainFilterComponent";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -36,10 +37,15 @@ const AddField = () => {
           let counter = false;
           let SITSCounter = false;
           for (let x of partSchoolDataConstant.current) {
-            for(let word of x.part.split(" ")){
-              for(let letter = 0; letter < word.length; letter ++){
+            for (let word of x.part.split(" ")) {
+              for (let letter = 0; letter < word.length; letter++) {
                 if (
-                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
+                  word
+                    .substring(
+                      letter,
+                      searchRef.current.value.trim().length + letter
+                    )
+                    .toLowerCase() ===
                   searchRef.current.value.trim().toLowerCase()
                 ) {
                   newDataSchoolInfo.push(x);
@@ -47,17 +53,22 @@ const AddField = () => {
                   break;
                 }
               }
-              if(counter){
+              if (counter) {
                 counter = false;
                 break;
               }
-            };
+            }
           }
           for (let y of partSITSDataConstant.current) {
-            for(let word of y.part.split(" ")) {
-              for(let letter = 0; letter < word.length; letter ++){
+            for (let word of y.part.split(" ")) {
+              for (let letter = 0; letter < word.length; letter++) {
                 if (
-                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
+                  word
+                    .substring(
+                      letter,
+                      searchRef.current.value.trim().length + letter
+                    )
+                    .toLowerCase() ===
                   searchRef.current.value.trim().toLowerCase()
                 ) {
                   newDataSITSInfo.push(y);
@@ -65,11 +76,11 @@ const AddField = () => {
                   break;
                 }
               }
-              if(SITSCounter){
+              if (SITSCounter) {
                 SITSCounter = false;
                 break;
               }
-            };
+            }
           }
           setPartSchoolInfo([...newDataSchoolInfo]);
           setPartSITSInfo([...newDataSITSInfo]);
@@ -88,7 +99,9 @@ const AddField = () => {
     let partSchoolData = [];
     let partSITSData = [];
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/School.json")
+    fetch(
+      "https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json"
+    )
       .then((response) => {
         return response.json();
       })
@@ -244,19 +257,22 @@ const AddField = () => {
         <div className={classes.spaceOutSearchField}>
           <Card>
             <div className={moreClasses.wrap}>
-                <div className={classes.control}>
-                  <label htmlFor="Part">Search a Part:</label>
-                  <input
-                    type="text"
-                    value={searchPart.part}
-                    onChange={(event) => searchPartChangedHandler(event)}
-                    ref={searchRef}
-                  />
-                </div>
+              <div className={classes.control}>
+                <label htmlFor="Part">Search a Part:</label>
+                <input
+                  type="text"
+                  value={searchPart.part}
+                  onChange={(event) => searchPartChangedHandler(event)}
+                  ref={searchRef}
+                />
+              </div>
             </div>
           </Card>
         </div>
       </div>
+
+      <mainFilter />
+
       <h1
         style={{
           textAlign: "center",
