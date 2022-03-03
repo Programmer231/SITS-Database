@@ -88,6 +88,7 @@ const DisplayField = (props) => {
           ? props.searchedSchoolInfo.map((part, index) => {
               return (
                 <DisplayData
+                  specialID = "School"
                   key={part.id}
                   definedValues={numberElements[index][0]}
                   undefinedValues={numberElements[index][1]}
@@ -114,6 +115,7 @@ const DisplayField = (props) => {
           ? props.searchedSITSInfo.map((part, index) => {
               return (
                 <DisplayData
+                  specialID = "SITS"
                   key={part.id}
                   definedValues={numberSITSElements[index][0]}
                   undefinedValues={numberSITSElements[index][1]}

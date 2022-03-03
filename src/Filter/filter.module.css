@@ -1,0 +1,30 @@
+.centerButton {
+  margin: auto;
+}
+.actions {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  color: black;
+  padding: 0.5rem 1.5rem;
+  border: 3px solid black;
+  font-weight: bold;
+}
+
+.backgroundPurple {
+  background-color: #77002e;
+  border: 3px solid black;
+}
+
+.backgroundWhite {
+  background-color: white;
+}
+
+.backgroundWhite:hover {
+  background-color: #a50e48;
+  border: 3px solid black;
+}

@@ -99,7 +99,7 @@ const DisplayData = (props) => {
     }
 
     fetch(
-      `https://sits-practice-default-rtdb.firebaseio.com/${props.mySearchedInfo.type}/${props.mySearchedInfo.id}/.json`,
+      `https://sits-practice-default-rtdb.firebaseio.com/${props.specialID}/${props.mySearchedInfo.id}/.json`,
       {
         method: "PATCH",
         body: JSON.stringify(finalData),
@@ -127,10 +127,9 @@ const DisplayData = (props) => {
             </div>
             <div className={classes.mainDataFormWrapper}>
               <label htmlFor="price">Price: </label>
-              <div>
+              <div className = {classes.priceWrap}>
                 <h1 className={classes.priceHeadings}>$</h1>
                 <input
-                  className={classes.money}
                   name="price"
                   type="number"
                   value={updatedFormData.price || 0}
@@ -142,9 +141,9 @@ const DisplayData = (props) => {
             </div>
             <div className={classes.mainDataFormWrapper}>
               <label htmlFor="total price">Total Price: </label>
-              <div>
-                <h1 className={classes.priceHeadings}>
-                  ${updatedFormData.price * updatedFormData.number || 0}
+              <div className = {classes.totalPriceHeadings}>
+                <h1 className = {classes.totalPriceHeadings}>
+                  <div>${updatedFormData.price * updatedFormData.number || 0}</div>
                 </h1>
               </div>
             </div>

@@ -85,3 +85,10 @@ input[type="checkbox"] {
 .spaceOutSearchField {
   margin-top: 50px;
 }
+
+.mainFilterStyles {
+  margin-top: 5000px;
+  width: 80%;
+  margin: auto;
+  margin-top: 50px;
+}

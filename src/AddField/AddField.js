@@ -5,7 +5,7 @@ import extraClasses from "../Form/NewMeetupForm.module.css";
 import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
-import mainFilter from "../Filter/mainFilterComponent";
+import MainFilter from "../Filter/MainFilterComponent";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -258,7 +258,9 @@ const AddField = () => {
           </Card>
         </div>
       </div>
-      <mainFilter />
+      <div className = {classes.mainFilterStyles}>
+        <MainFilter />
+      </div>
       <h1
         style={{
           textAlign: "center",
