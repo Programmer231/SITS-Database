@@ -30,12 +30,11 @@ const DisplayData = (props) => {
 
   const purposeClickedHandler = () => {
     setPurposeClicked((prevState) => !prevState);
-
-  }
+  };
 
   const typeClickedHandler = () => {
     setTypeClicked((prevState) => !prevState);
-  }
+  };
 
   const inputStringChangedHandler = (event, name) => {
     setUpdatedFormData((prevState) => {
@@ -127,12 +126,12 @@ const DisplayData = (props) => {
             </div>
             <div className={classes.mainDataFormWrapper}>
               <label htmlFor="price">Price: </label>
-              <div className = {classes.priceWrap}>
+              <div className={classes.priceWrap}>
                 <h1 className={classes.priceHeadings}>$</h1>
                 <input
                   name="price"
                   type="number"
-                  value={updatedFormData.price || 0}
+                  value={updatedFormData.price.toFixed(2) || 0}
                   onChange={(event) =>
                     inputNumberChangedHandler(event, "price")
                   }
@@ -141,9 +140,14 @@ const DisplayData = (props) => {
             </div>
             <div className={classes.mainDataFormWrapper}>
               <label htmlFor="total price">Total Price: </label>
-              <div className = {classes.totalPriceHeadings}>
-                <h1 className = {classes.totalPriceHeadings}>
-                  <div>${updatedFormData.price * updatedFormData.number || 0}</div>
+              <div className={classes.totalPriceHeadings}>
+                <h1 className={classes.totalPriceHeadings}>
+                  <div>
+                    $
+                    {(updatedFormData.price * updatedFormData.number).toFixed(
+                      2
+                    ) || 0}
+                  </div>
                 </h1>
               </div>
             </div>
@@ -174,7 +178,7 @@ const DisplayData = (props) => {
               <input
                 name="serial"
                 type="text"
-                value={updatedFormData.serialNumber || ''}
+                value={updatedFormData.serialNumber || ""}
                 onChange={(event) =>
                   inputStringChangedHandler(event, "serialNumber")
                 }
@@ -219,7 +223,6 @@ const DisplayData = (props) => {
                 ) : null}
               </div>
             </div>
-            
           </div>
           <h2 style={{ textAlign: "center" }}>Defined Values:</h2>
           {definedState.map((value) => {
