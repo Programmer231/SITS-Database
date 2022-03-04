@@ -62,13 +62,16 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/School.json", {
-      method: "POST",
-      body: JSON.stringify({ ...formData, ...checkedData }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(() => {
+    fetch(
+      "https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json",
+      {
+        method: "POST",
+        body: JSON.stringify({ ...formData, ...checkedData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(() => {
       setFormData({
         part: "",
         description: "",
@@ -97,7 +100,7 @@ const Form = (props) => {
             <input
               name="Part"
               type="text"
-              value={formData.part || ''}
+              value={formData.part || ""}
               onChange={(event) => inputStringChangedHandler(event, "part")}
               required
             />
@@ -107,7 +110,7 @@ const Form = (props) => {
             <input
               name="description"
               type="text"
-              value={formData.description || ''}
+              value={formData.description || ""}
               onChange={(event) =>
                 inputStringChangedHandler(event, "description")
               }

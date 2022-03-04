@@ -2,8 +2,8 @@ import Card from "../UI/Card";
 import moreClasses from "../Display/DisplayField.module.css";
 import formClasses from "../AddField/AddField.module.css";
 import classes from "./filter.module.css";
+import SelectOptionClasses from "./MainFilterComponent.module.css";
 import { useState } from "react";
-import { prettyDOM } from "@testing-library/react";
 
 const MainFilter = () => {
   const [numberSelected, setNumberSelected] = useState(true);
@@ -46,22 +46,33 @@ const MainFilter = () => {
             Text
           </button>
         </div>
-        {numberSelected ? (
-          <select name="numberFilter" id="numberFilter">
-            <option value="assetTagNumber">Asset Tag Number</option>
-            <option value="PCEPTagNumber">PCEP Tag Number</option>
-            <option value="price">Price</option>
-            <option value="quantity">Quantity</option>
-            <option value="totalPrice">Total Price</option>
-          </select>
-        ) : (
-          <select name="textFilter" id="textFilter">
-            <option value="part">Part</option>
-            <option value="description">Description</option>
-            <option value="purpose">Purpose</option>
-            <option value="type">Type</option>
-          </select>
-        )}
+
+        <div className={SelectOptionClasses.centerOptions}>
+          {numberSelected ? (
+            <select
+              className={SelectOptionClasses.options}
+              name="numberFilter"
+              id="numberFilter"
+            >
+              <option value="assetTagNumber">Asset Tag Number</option>
+              <option value="PCEPTagNumber">PCEP Tag Number</option>
+              <option value="price">Price</option>
+              <option value="quantity">Quantity</option>
+              <option value="totalPrice">Total Price</option>
+            </select>
+          ) : (
+            <select
+              className={SelectOptionClasses.options}
+              name="textFilter"
+              id="textFilter"
+            >
+              <option value="part">Part</option>
+              <option value="description">Description</option>
+              <option value="purpose">Purpose</option>
+              <option value="type">Type</option>
+            </select>
+          )}
+        </div>
 
         <div className={formClasses.actions} style={{ textAlign: "center" }}>
           <button>Add</button>

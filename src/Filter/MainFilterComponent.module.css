@@ -1,0 +1,10 @@
+.options {
+    padding: 20px;
+    font-size: 2rem;
+}
+
+.centerOptions { 
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
