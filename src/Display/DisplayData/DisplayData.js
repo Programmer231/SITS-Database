@@ -98,7 +98,7 @@ const DisplayData = (props) => {
     }
 
     fetch(
-      `https://sits-practice-default-rtdb.firebaseio.com/${props.specialID}/${props.mySearchedInfo.id}/.json`,
+      `https://sits-practice-default-rtdb.firebaseio.com/${props.specialID}/${props.firebaseID}/${props.mySearchedInfo.id}/.json`,
       {
         method: "PATCH",
         body: JSON.stringify(finalData),

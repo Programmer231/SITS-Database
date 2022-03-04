@@ -89,6 +89,7 @@ const DisplayField = (props) => {
               return (
                 <DisplayData
                   specialID = "School"
+                  firebaseID = "-MwwnSmoggPm4EINVQKA"
                   key={part.id}
                   definedValues={numberElements[index][0]}
                   undefinedValues={numberElements[index][1]}
@@ -116,6 +117,7 @@ const DisplayField = (props) => {
               return (
                 <DisplayData
                   specialID = "SITS"
+                  firebaseID = ""
                   key={part.id}
                   definedValues={numberSITSElements[index][0]}
                   undefinedValues={numberSITSElements[index][1]}
