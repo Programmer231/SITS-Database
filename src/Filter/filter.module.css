@@ -28,3 +28,14 @@
   background-color: #a50e48;
   border: 3px solid black;
 }
+
+.filtersWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  border-top: 5px solid #77002e;
+  padding: 20px;
+}

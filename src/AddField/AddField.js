@@ -1,5 +1,5 @@
 import Card from "../UI/Card";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import classes from "./AddField.module.css";
 import extraClasses from "../Form/NewMeetupForm.module.css";
 import Form from "../Form/Form";
@@ -15,81 +15,92 @@ const AddField = () => {
   });
 
   const [certificationState, setCertificationState] = useState([]);
-
+  const [filters, setFilters] = useState([]);
   const [searchPart, setSearchPart] = useState({ part: "" });
 
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
   const [partSITSInfo, setPartSITSInfo] = useState([]);
+  const [schoolOldData, setSchoolOldData] = useState([]);
+  const [SITSOldData, setSITSOldData] = useState([]);
+  const [filteringDataSchool, setFilteringDataSchool] = useState([]);
+  const [filteringDataSITS, setFilteringDataSITS] = useState([]);
 
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
   const partSITSDataConstant = useRef();
-  const firstRender = useRef(true);
 
-  useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-    } else {
-      const timer = setTimeout(() => {
-        if (searchPart.part === searchRef.current.value) {
-          let newDataSchoolInfo = [];
-          let newDataSITSInfo = [];
-          let counter = false;
-          let SITSCounter = false;
-          for (let x of partSchoolDataConstant.current) {
-            for(let word of x.part.split(" ")){
-              for(let letter = 0; letter < word.length; letter ++){
-                if (
-                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
-                  searchRef.current.value.trim().toLowerCase()
-                ) {
-                  newDataSchoolInfo.push(x);
-                  counter = true;
-                  break;
-                }
-              }
-              if(counter){
-                counter = false;
+  const searchFunction = (search) => {
+    setTimeout(() => {
+      if (search === searchRef.current.value) {
+        let newDataSchoolInfo = [];
+        let newDataSITSInfo = [];
+        let counter = false;
+        let SITSCounter = false;
+        for (let x of partSchoolDataConstant.current) {
+          for (let word of x.part.split(" ")) {
+            for (let letter = 0; letter < word.length; letter++) {
+              if (
+                word
+                  .substring(
+                    letter,
+                    searchRef.current.value.trim().length + letter
+                  )
+                  .toLowerCase() ===
+                searchRef.current.value.trim().toLowerCase()
+              ) {
+                newDataSchoolInfo.push(x);
+                counter = true;
                 break;
               }
-            };
+            }
+            if (counter) {
+              counter = false;
+              break;
+            }
           }
-          for (let y of partSITSDataConstant.current) {
-            for(let word of y.part.split(" ")) {
-              for(let letter = 0; letter < word.length; letter ++){
-                if (
-                  word.substring(letter, searchRef.current.value.trim().length + letter).toLowerCase() ===
-                  searchRef.current.value.trim().toLowerCase()
-                ) {
-                  newDataSITSInfo.push(y);
-                  SITSCounter = true;
-                  break;
-                }
-              }
-              if(SITSCounter){
-                SITSCounter = false;
-                break;
-              }
-            };
-          }
-          setPartSchoolInfo([...newDataSchoolInfo]);
-          setPartSITSInfo([...newDataSITSInfo]);
-          newDataSchoolInfo = [];
-          newDataSITSInfo = [];
         }
-      }, 1000);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [searchPart, searchRef, partSchoolDataConstant, partSITSDataConstant]);
+        for (let y of partSITSDataConstant.current) {
+          for (let word of y.part.split(" ")) {
+            for (let letter = 0; letter < word.length; letter++) {
+              if (
+                word
+                  .substring(
+                    letter,
+                    searchRef.current.value.trim().length + letter
+                  )
+                  .toLowerCase() ===
+                searchRef.current.value.trim().toLowerCase()
+              ) {
+                newDataSITSInfo.push(y);
+                SITSCounter = true;
+                break;
+              }
+            }
+            if (SITSCounter) {
+              SITSCounter = false;
+              break;
+            }
+          }
+        }
+        setPartSchoolInfo([...newDataSchoolInfo]);
+        setPartSITSInfo([...newDataSITSInfo]);
+        setSchoolOldData([...newDataSchoolInfo]);
+        setSITSOldData([...newDataSITSInfo]);
+        setFilteringDataSchool([...newDataSchoolInfo]);
+        setFilteringDataSITS([...newDataSITSInfo]);
+        newDataSchoolInfo = [];
+        newDataSITSInfo = [];
+      }
+    }, 1000);
+  };
 
   useEffect(() => {
     let partSchoolData = [];
     let partSITSData = [];
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json")
+    fetch(
+      "https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json"
+    )
       .then((response) => {
         return response.json();
       })
@@ -100,8 +111,11 @@ const AddField = () => {
           }
           partSchoolData.push({ id: key, ...data[key] });
         }
-        setPartSchoolInfo(partSchoolData);
+        setPartSchoolInfo([...partSchoolData]);
         partSchoolDataConstant.current = [...partSchoolData];
+        setSchoolOldData([...partSchoolData]);
+        setFilteringDataSchool([...partSchoolData]);
+        setFilteringDataSITS([...partSITSData]);
       });
 
     fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS.json")
@@ -115,8 +129,9 @@ const AddField = () => {
           }
           partSITSData.push({ id: key, ...data[key] });
         }
-        setPartSITSInfo(partSITSData);
+        setPartSITSInfo([...partSITSData]);
         partSITSDataConstant.current = [...partSITSData];
+        setSITSOldData([...partSITSData]);
       });
   }, []);
 
@@ -129,6 +144,125 @@ const AddField = () => {
         [name]: !prevState[name],
       };
     });
+  };
+
+  const filterAllData = useCallback(
+    (schoolData, SITSData, filter, count, allFilters) => {
+      if (!filter) {
+        return;
+      }
+      let newDataSchoolInfo = [];
+      let newDataSITSInfo = [];
+      let z = { ...filter };
+      if (z.type === "text") {
+        let counter = false;
+        let SITSCounter = false;
+        for (let x of schoolData) {
+          for (let word of x[z.dataValue].split(" ")) {
+            for (let letter = 0; letter < word.length; letter++) {
+              if (
+                word
+                  .substring(letter, z.text.trim().length + letter)
+                  .toLowerCase() === z.text.trim().toLowerCase()
+              ) {
+                newDataSchoolInfo.push(x);
+                counter = true;
+                break;
+              }
+            }
+            if (counter) {
+              counter = false;
+              break;
+            }
+          }
+        }
+        for (let y of SITSData) {
+          for (let word of y[z.dataValue].split(" ")) {
+            for (let letter = 0; letter < word.length; letter++) {
+              if (
+                word
+                  .substring(letter, z.text.trim().length + letter)
+                  .toLowerCase() === z.text.trim().toLowerCase()
+              ) {
+                newDataSITSInfo.push(y);
+                SITSCounter = true;
+                break;
+              }
+            }
+            if (SITSCounter) {
+              SITSCounter = false;
+              break;
+            }
+          }
+        }
+      } else if (z.type === "number") {
+        if (z.sign === ">") {
+          for (let item of schoolData) {
+            if (item[z.dataValue] > z.number) {
+              newDataSchoolInfo.push(item);
+            }
+          }
+        } else if (z.sign === "<") {
+          for (let item of schoolData) {
+            if (item[z.dataValue] < z.number) {
+              newDataSchoolInfo.push(item);
+            }
+          }
+        } else if (z.sign === "=") {
+          for (let item of schoolData) {
+            if (item[z.dataValue] === z.number) {
+              newDataSchoolInfo.push(item);
+            }
+          }
+        }
+      }
+
+      count++;
+
+      if (z.readValue === allFilters[allFilters.length - 1].readValue) {
+        setPartSchoolInfo([...newDataSchoolInfo]);
+        setPartSITSInfo([...newDataSITSInfo]);
+        return;
+      } else {
+        filterAllData(
+          [...newDataSchoolInfo],
+          [...newDataSITSInfo],
+          allFilters[count],
+          count,
+          allFilters
+        );
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (filters.length === 0) {
+      setPartSchoolInfo([...schoolOldData]);
+      setPartSITSInfo([...SITSOldData]);
+    } else {
+      filterAllData(schoolOldData, SITSOldData, filters[0], 0, filters);
+    }
+  }, [filters, schoolOldData, SITSOldData, filterAllData]);
+
+  const addFilter = (filter) => {
+    for (let x of filters) {
+      if (x.dataValue === filter.dataValue) {
+        return;
+      }
+    }
+
+    setFilters((prevState) => [...prevState, filter]);
+  };
+
+  const deleteFilter = (name) => {
+    setFilters((prevState) =>
+      prevState.filter((filter) => name !== filter.readValue)
+    );
+
+    if (filters.length === 1) {
+      return;
+    }
   };
 
   const submitAddField = () => {
@@ -168,6 +302,8 @@ const AddField = () => {
     setSearchPart({
       part: event.target.value,
     });
+
+    searchFunction(event.target.value);
   };
 
   const displayDataHandler = (event) => {
@@ -245,21 +381,25 @@ const AddField = () => {
         <div className={classes.spaceOutSearchField}>
           <Card>
             <div className={moreClasses.wrap}>
-                <div className={classes.control}>
-                  <label htmlFor="Part">Search a Part:</label>
-                  <input
-                    type="text"
-                    value={searchPart.part}
-                    onChange={(event) => searchPartChangedHandler(event)}
-                    ref={searchRef}
-                  />
-                </div>
+              <div className={classes.control}>
+                <label htmlFor="Part">Search a Part:</label>
+                <input
+                  type="text"
+                  value={searchPart.part}
+                  onChange={(event) => searchPartChangedHandler(event)}
+                  ref={searchRef}
+                />
+              </div>
             </div>
           </Card>
         </div>
       </div>
-      <div className = {classes.mainFilterStyles}>
-        <MainFilter />
+      <div className={classes.mainFilterStyles}>
+        <MainFilter
+          addFilter={addFilter}
+          deleteFilter={deleteFilter}
+          filters={filters}
+        />
       </div>
       <h1
         style={{

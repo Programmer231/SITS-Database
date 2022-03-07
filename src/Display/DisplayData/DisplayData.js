@@ -116,7 +116,7 @@ const DisplayData = (props) => {
           <div className={classes.headingWrapper}>
             <h1 style={{ textAlign: "center" }}>{props.mySearchedInfo.part}</h1>
             <div className={classes.mainDataFormWrapper}>
-              <label htmlFor="number">Number: </label>
+              <label htmlFor="number">Quantity: </label>
               <input
                 name="number"
                 type="number"
@@ -131,7 +131,7 @@ const DisplayData = (props) => {
                 <input
                   name="price"
                   type="number"
-                  value={updatedFormData.price.toFixed(2) || 0}
+                  value={updatedFormData.price || 0}
                   onChange={(event) =>
                     inputNumberChangedHandler(event, "price")
                   }
