@@ -22,8 +22,6 @@ const AddField = () => {
   const [partSITSInfo, setPartSITSInfo] = useState([]);
   const [schoolOldData, setSchoolOldData] = useState([]);
   const [SITSOldData, setSITSOldData] = useState([]);
-  const [filteringDataSchool, setFilteringDataSchool] = useState([]);
-  const [filteringDataSITS, setFilteringDataSITS] = useState([]);
 
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
@@ -86,8 +84,6 @@ const AddField = () => {
         setPartSITSInfo([...newDataSITSInfo]);
         setSchoolOldData([...newDataSchoolInfo]);
         setSITSOldData([...newDataSITSInfo]);
-        setFilteringDataSchool([...newDataSchoolInfo]);
-        setFilteringDataSITS([...newDataSITSInfo]);
         newDataSchoolInfo = [];
         newDataSITSInfo = [];
       }
@@ -114,8 +110,6 @@ const AddField = () => {
         setPartSchoolInfo([...partSchoolData]);
         partSchoolDataConstant.current = [...partSchoolData];
         setSchoolOldData([...partSchoolData]);
-        setFilteringDataSchool([...partSchoolData]);
-        setFilteringDataSITS([...partSITSData]);
       });
 
     fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS.json")
