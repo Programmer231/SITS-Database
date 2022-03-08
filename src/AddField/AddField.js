@@ -190,21 +190,42 @@ const AddField = () => {
           }
         }
       } else if (z.type === "number") {
+        if(z.dataValue === "totalPrice"){
+          if (z.sign === ">") {
+            for (let item of schoolData) {
+              if (((item.price || 0) * (item.number || 0)) > z.number) {
+                newDataSchoolInfo.push(item);
+              }
+            }
+          } else if (z.sign === "<") {
+            for (let item of schoolData) {
+              if (((item.price || 0) * (item.number || 0)) < z.number) {
+                newDataSchoolInfo.push(item);
+              }
+            }
+          } else if (z.sign === "=") {
+            for (let item of schoolData) {
+              if (((item.price || 0) * (item.number || 0)) === z.number) {
+                newDataSchoolInfo.push(item);
+              }
+            }
+          }
+        }
         if (z.sign === ">") {
           for (let item of schoolData) {
-            if (item[z.dataValue] > z.number) {
+            if ((item[z.dataValue] || 0) > z.number) {
               newDataSchoolInfo.push(item);
             }
           }
         } else if (z.sign === "<") {
           for (let item of schoolData) {
-            if (item[z.dataValue] < z.number) {
+            if ((item[z.dataValue] || 0) < z.number) {
               newDataSchoolInfo.push(item);
             }
           }
         } else if (z.sign === "=") {
           for (let item of schoolData) {
-            if (item[z.dataValue] === z.number) {
+            if ((item[z.dataValue] || 0) === z.number) {
               newDataSchoolInfo.push(item);
             }
           }
