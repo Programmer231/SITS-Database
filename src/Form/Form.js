@@ -5,6 +5,7 @@ import CheckBox from "./CheckBox/CheckBox";
 
 const Form = (props) => {
   const [checkedData, setCheckedData] = useState({});
+  const [dataType, setDataType] = useState("School");
 
   const { certifications } = props;
 
@@ -29,6 +30,10 @@ const Form = (props) => {
     purpose: "",
     type: "",
   });
+
+  const dataTypeChangedHandler = (event) => {
+    setDataType(event.target.value);
+  }
 
   const inputStringChangedHandler = (event, name) => {
     console.log(event);
@@ -188,6 +193,13 @@ const Form = (props) => {
           <div className={classes.control}>
             <label htmlFor="total price">Total Price</label>
             <h2>${formData.price * formData.number}</h2>
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="total price">Data Type</label>
+            <select name = "Data Type" id = "Data Type" onChange={dataTypeChangedHandler} className = {classes.options}>
+              <option name = "School" value = "School">School</option>
+              <option name = "SITS" value = "SITS">SITS</option>
+            </select>
           </div>
           <div className={classes.control}>
             <label htmlFor="Info">Other Important Information</label>

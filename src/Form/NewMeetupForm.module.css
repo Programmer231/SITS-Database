@@ -73,3 +73,8 @@ input[type="checkbox"] {
   width: 20px;
   min-width: 20px;
 }
+
+.options {
+  padding: 10px;
+  font-size: 1rem;
+}

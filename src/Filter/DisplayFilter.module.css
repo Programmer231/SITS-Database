@@ -1,22 +1,23 @@
 .FiltersWrap {
-    padding: 10px;
-    width: 30%;
-    border: 3px solid black;
-    margin-left: 50px;
+  padding: 10px;
+  width: 30%;
+  border: 3px solid black;
+  margin-left: 50px;
 }
 
 .FiltersWrap:nth-child(1),
-.FiltersWrap:nth-child(1):hover{
-    margin-left: 0;
+.FiltersWrap:nth-child(1):hover {
+  margin-left: 0;
 }
 
 .FiltersWrap:hover {
-    padding: 10px;
-    width: 30%;
-    border: 3px solid black;
-    margin-left: 50px;
-    background-image: url("../UI/assets/images/XMark.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  padding: 10px;
+  width: 30%;
+  border: 3px solid black;
+  margin-left: 50px;
+  background-image: url("../UI/assets/images/XMark.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
 }
