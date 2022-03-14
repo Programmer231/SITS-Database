@@ -393,7 +393,16 @@ const AddField = () => {
             </form>
           </div>
         </Card>
-        <div className={classes.spaceOutSearchField}>
+        
+      </div>
+      <div className={classes.mainFilterStyles}>
+        <MainFilter
+          addFilter={addFilter}
+          deleteFilter={deleteFilter}
+          filters={filters}
+        />
+      </div>
+      <div className={classes.spaceOutSearchField}>
           <Card>
             <div className={moreClasses.wrap}>
               <div className={classes.control}>
@@ -408,14 +417,6 @@ const AddField = () => {
             </div>
           </Card>
         </div>
-      </div>
-      <div className={classes.mainFilterStyles}>
-        <MainFilter
-          addFilter={addFilter}
-          deleteFilter={deleteFilter}
-          filters={filters}
-        />
-      </div>
       <h1
         style={{
           textAlign: "center",
