@@ -6,6 +6,7 @@ import Form from "../Form/Form";
 import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
 import MainFilter from "../Filter/MainFilterComponent";
+import Sort from "../Sort/Sort";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -16,6 +17,7 @@ const AddField = () => {
 
   const [certificationState, setCertificationState] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [sortItems, setSortItems] = useState([]);
   const [searchPart, setSearchPart] = useState({ part: "" });
 
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
@@ -402,6 +404,10 @@ const AddField = () => {
           filters={filters}
         />
       </div>
+      <div className = {classes.mainFilterStyles}>
+                  <Sort sort = {sortItems}/>
+      </div>
+
       <div className={classes.spaceOutSearchField}>
           <Card>
             <div className={moreClasses.wrap}>
