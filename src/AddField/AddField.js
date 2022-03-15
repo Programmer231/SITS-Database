@@ -24,6 +24,7 @@ const AddField = () => {
   const [partSITSInfo, setPartSITSInfo] = useState([]);
   const [schoolOldData, setSchoolOldData] = useState([]);
   const [SITSOldData, setSITSOldData] = useState([]);
+  const [unsortedData, setUnsortedData] = useState([]);
 
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
@@ -86,6 +87,8 @@ const AddField = () => {
         setPartSITSInfo([...newDataSITSInfo]);
         setSchoolOldData([...newDataSchoolInfo]);
         setSITSOldData([...newDataSITSInfo]);
+        setUnsortedDataSchool([...newDataSchoolInfo]);
+        setUnsortedDataSITS([...newDataSITSInfo]);
         newDataSchoolInfo = [];
         newDataSITSInfo = [];
       }
@@ -142,9 +145,46 @@ const AddField = () => {
     });
   };
 
+  const sortData = useCallback((schoolData, SITSData, sortCount, sortItems, item) => {
+
+    if(!item){
+      return;
+    }
+
+
+    let newDataSchoolSortedInfo = [...schoolData];
+    let newDataSITSSortedInfo = [...SITSData];
+
+    for(let x = 0; x < schoolData.length; x ++){
+      let key = schoolData[x];
+      let j = x - 1;
+
+      while( j >= 0 && schoolData[j] > key){
+        newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+        j --;
+      }
+
+      newDataSchoolSortedInfo[j + 1] = key;
+    }
+
+    for(let item of SITSData){
+
+    }
+
+    let z = {... item};
+
+    sortCount ++;
+
+    
+      setPartSchoolInfo([...newDataSchoolSortedInfo]);
+      setPartSITSInfo([...newDataSITSSortedInfo]);
+      return;
+  }, []);
+
   const filterAllData = useCallback(
-    (schoolData, SITSData, filter, count, allFilters) => {
+    (schoolData, SITSData, filter, filterCount, allFilters, sortItems) => {
       if (!filter) {
+        sortData(schoolData, SITSData, 0, sortItems, sortItems[0]);
         return;
       }
       let newDataSchoolInfo = [];
@@ -234,18 +274,17 @@ const AddField = () => {
         }
       }
 
-      count++;
+      filterCount++;
 
       if (z.readValue === allFilters[allFilters.length - 1].readValue) {
-        setPartSchoolInfo([...newDataSchoolInfo]);
-        setPartSITSInfo([...newDataSITSInfo]);
+        sortData(schoolData, SITSData, 0, sortItems, sortItems[0], sortLength);
         return;
       } else {
         filterAllData(
           [...newDataSchoolInfo],
           [...newDataSITSInfo],
-          allFilters[count],
-          count,
+          allFilters[filterCount],
+          filterCount,
           allFilters
         );
       }
@@ -258,7 +297,7 @@ const AddField = () => {
       setPartSchoolInfo([...schoolOldData]);
       setPartSITSInfo([...SITSOldData]);
     } else {
-      filterAllData(schoolOldData, SITSOldData, filters[0], 0, filters);
+      filterAllData(schoolOldData, SITSOldData, filters[0], 0, filters, sortItems, sortItems[0]);
     }
   }, [filters, schoolOldData, SITSOldData, filterAllData]);
 
