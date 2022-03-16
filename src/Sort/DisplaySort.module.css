@@ -1,0 +1,22 @@
+.FiltersWrap {
+    padding: 40px;
+    width: 30%;
+    border: 3px solid black;
+    margin-left: 10px;
+  }
+  
+  .FiltersWrap:hover {
+    padding: 40px;
+    width: 30%;
+    border: 3px solid black;
+    margin-left: 10px;
+    background-image: url("../UI/assets/images/XMark.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  .SortItem {
+    border-bottom: 5px dotted #77002e;
+  }

@@ -17,14 +17,13 @@ const AddField = () => {
 
   const [certificationState, setCertificationState] = useState([]);
   const [filters, setFilters] = useState([]);
-  const [sortItems, setSortItems] = useState([]);
+  const [sortItems, setSortItems] = useState({});
   const [searchPart, setSearchPart] = useState({ part: "" });
 
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
   const [partSITSInfo, setPartSITSInfo] = useState([]);
   const [schoolOldData, setSchoolOldData] = useState([]);
   const [SITSOldData, setSITSOldData] = useState([]);
-  const [unsortedData, setUnsortedData] = useState([]);
 
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
@@ -87,8 +86,6 @@ const AddField = () => {
         setPartSITSInfo([...newDataSITSInfo]);
         setSchoolOldData([...newDataSchoolInfo]);
         setSITSOldData([...newDataSITSInfo]);
-        setUnsortedDataSchool([...newDataSchoolInfo]);
-        setUnsortedDataSITS([...newDataSITSInfo]);
         newDataSchoolInfo = [];
         newDataSITSInfo = [];
       }
@@ -145,46 +142,70 @@ const AddField = () => {
     });
   };
 
-  const sortData = useCallback((schoolData, SITSData, sortCount, sortItems, item) => {
+  const sortMyItems = (item) => {
+    setSortItems({ ...item });
+  };
 
-    if(!item){
+  const deleteSortItem = () => {
+    setSortItems({});
+  };
+
+  const sortData = useCallback((schoolData, SITSData, sortItems) => {
+    if (!sortItems) {
       return;
     }
-
 
     let newDataSchoolSortedInfo = [...schoolData];
     let newDataSITSSortedInfo = [...SITSData];
+    if (sortItems.dataValue === "totalPrice") {
+      for (let x = 0; x < newDataSchoolSortedInfo.length; x++) {
+        let key = newDataSchoolSortedInfo[x];
+        let compare =
+          (newDataSchoolSortedInfo[x].number || 0) *
+          (newDataSchoolSortedInfo[x].price || 0);
+        let j = x - 1;
 
-    for(let x = 0; x < schoolData.length; x ++){
-      let key = schoolData[x];
-      let j = x - 1;
+        while (
+          j >= 0 &&
+          newDataSchoolSortedInfo[j].number * newDataSchoolSortedInfo[j].price >
+            compare
+        ) {
+          console.log("ran");
+          newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+          j--;
+        }
 
-      while( j >= 0 && schoolData[j] > key){
-        newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
-        j --;
+        newDataSchoolSortedInfo[j + 1] = { ...key };
       }
+    } else {
+      for (let x = 0; x < newDataSchoolSortedInfo.length; x++) {
+        let key = newDataSchoolSortedInfo[x];
+        let compare = newDataSchoolSortedInfo[x][sortItems.dataValue];
+        let j = x - 1;
 
-      newDataSchoolSortedInfo[j + 1] = key;
+        while (
+          j >= 0 &&
+          newDataSchoolSortedInfo[j][sortItems.dataValue] > compare
+        ) {
+          console.log("ran");
+          newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+          j--;
+        }
+
+        newDataSchoolSortedInfo[j + 1] = { ...key };
+      }
     }
 
-    for(let item of SITSData){
-
-    }
-
-    let z = {... item};
-
-    sortCount ++;
-
-    
-      setPartSchoolInfo([...newDataSchoolSortedInfo]);
-      setPartSITSInfo([...newDataSITSSortedInfo]);
-      return;
+    console.log(newDataSchoolSortedInfo);
+    setPartSchoolInfo([...newDataSchoolSortedInfo]);
+    setPartSITSInfo([...newDataSITSSortedInfo]);
+    return;
   }, []);
 
   const filterAllData = useCallback(
     (schoolData, SITSData, filter, filterCount, allFilters, sortItems) => {
       if (!filter) {
-        sortData(schoolData, SITSData, 0, sortItems, sortItems[0]);
+        sortData(schoolData, SITSData, sortItems);
         return;
       }
       let newDataSchoolInfo = [];
@@ -232,22 +253,22 @@ const AddField = () => {
           }
         }
       } else if (z.type === "number") {
-        if(z.dataValue === "totalPrice"){
+        if (z.dataValue === "totalPrice") {
           if (z.sign === ">") {
             for (let item of schoolData) {
-              if (((item.price || 0) * (item.number || 0)) > z.number) {
+              if ((item.price || 0) * (item.number || 0) > z.number) {
                 newDataSchoolInfo.push(item);
               }
             }
           } else if (z.sign === "<") {
             for (let item of schoolData) {
-              if (((item.price || 0) * (item.number || 0)) < z.number) {
+              if ((item.price || 0) * (item.number || 0) < z.number) {
                 newDataSchoolInfo.push(item);
               }
             }
           } else if (z.sign === "=") {
             for (let item of schoolData) {
-              if (((item.price || 0) * (item.number || 0)) === z.number) {
+              if ((item.price || 0) * (item.number || 0) === z.number) {
                 newDataSchoolInfo.push(item);
               }
             }
@@ -277,7 +298,7 @@ const AddField = () => {
       filterCount++;
 
       if (z.readValue === allFilters[allFilters.length - 1].readValue) {
-        sortData(schoolData, SITSData, 0, sortItems, sortItems[0], sortLength);
+        sortData([...newDataSchoolInfo], [...newDataSITSInfo], sortItems);
         return;
       } else {
         filterAllData(
@@ -285,7 +306,8 @@ const AddField = () => {
           [...newDataSITSInfo],
           allFilters[filterCount],
           filterCount,
-          allFilters
+          allFilters,
+          sortItems
         );
       }
     },
@@ -293,13 +315,15 @@ const AddField = () => {
   );
 
   useEffect(() => {
-    if (filters.length === 0) {
-      setPartSchoolInfo([...schoolOldData]);
-      setPartSITSInfo([...SITSOldData]);
-    } else {
-      filterAllData(schoolOldData, SITSOldData, filters[0], 0, filters, sortItems, sortItems[0]);
-    }
-  }, [filters, schoolOldData, SITSOldData, filterAllData]);
+    filterAllData(
+      schoolOldData,
+      SITSOldData,
+      filters[0],
+      0,
+      filters,
+      sortItems
+    );
+  }, [filters, schoolOldData, SITSOldData, filterAllData, sortItems, sortData]);
 
   const addFilter = (filter) => {
     for (let x of filters) {
@@ -434,7 +458,6 @@ const AddField = () => {
             </form>
           </div>
         </Card>
-        
       </div>
       <div className={classes.mainFilterStyles}>
         <MainFilter
@@ -443,25 +466,29 @@ const AddField = () => {
           filters={filters}
         />
       </div>
-      <div className = {classes.mainFilterStyles}>
-                  <Sort sort = {sortItems}/>
+      <div className={classes.mainFilterStyles}>
+        <Sort
+          addSort={sortMyItems}
+          sort={sortItems}
+          deleteSort={deleteSortItem}
+        />
       </div>
 
       <div className={classes.spaceOutSearchField}>
-          <Card>
-            <div className={moreClasses.wrap}>
-              <div className={classes.control}>
-                <label htmlFor="Part">Search a Part:</label>
-                <input
-                  type="text"
-                  value={searchPart.part}
-                  onChange={(event) => searchPartChangedHandler(event)}
-                  ref={searchRef}
-                />
-              </div>
+        <Card>
+          <div className={moreClasses.wrap}>
+            <div className={classes.control}>
+              <label htmlFor="Part">Search a Part:</label>
+              <input
+                type="text"
+                value={searchPart.part}
+                onChange={(event) => searchPartChangedHandler(event)}
+                ref={searchRef}
+              />
             </div>
-          </Card>
-        </div>
+          </div>
+        </Card>
+      </div>
       <h1
         style={{
           textAlign: "center",

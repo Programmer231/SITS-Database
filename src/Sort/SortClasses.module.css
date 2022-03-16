@@ -1,3 +1,15 @@
 .SortItem {
   border-bottom: 5px dotted #77002e;
 }
+
+.SortWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  margin-top: 100px;
+  border-top: 5px solid #77002e;
+  padding: 20px;
+}
