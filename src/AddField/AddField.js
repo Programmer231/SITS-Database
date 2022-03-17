@@ -164,17 +164,29 @@ const AddField = () => {
           (newDataSchoolSortedInfo[x].number || 0) *
           (newDataSchoolSortedInfo[x].price || 0);
         let j = x - 1;
-
-        while (
-          j >= 0 &&
-          newDataSchoolSortedInfo[j].number * newDataSchoolSortedInfo[j].price >
-            compare
-        ) {
-          console.log("ran");
-          newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
-          j--;
+        if (sortItems.ascending) {
+          while (
+            j >= 0 &&
+            (newDataSchoolSortedInfo[j].number || 0) *
+              (newDataSchoolSortedInfo[j].price || 0) >
+              compare
+          ) {
+            console.log("ran");
+            newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+            j--;
+          }
+        } else {
+          while (
+            j >= 0 &&
+            (newDataSchoolSortedInfo[j].number || 0) *
+              (newDataSchoolSortedInfo[j].price || 0) <
+              compare
+          ) {
+            console.log("ran");
+            newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+            j--;
+          }
         }
-
         newDataSchoolSortedInfo[j + 1] = { ...key };
       }
     } else {
@@ -183,13 +195,24 @@ const AddField = () => {
         let compare = newDataSchoolSortedInfo[x][sortItems.dataValue];
         let j = x - 1;
 
-        while (
-          j >= 0 &&
-          newDataSchoolSortedInfo[j][sortItems.dataValue] > compare
-        ) {
-          console.log("ran");
-          newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
-          j--;
+        if (sortItems.ascending) {
+          while (
+            j >= 0 &&
+            newDataSchoolSortedInfo[j][sortItems.dataValue] > compare
+          ) {
+            console.log("ran");
+            newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+            j--;
+          }
+        } else {
+          while (
+            j >= 0 &&
+            newDataSchoolSortedInfo[j][sortItems.dataValue] < compare
+          ) {
+            console.log("ran");
+            newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
+            j--;
+          }
         }
 
         newDataSchoolSortedInfo[j + 1] = { ...key };

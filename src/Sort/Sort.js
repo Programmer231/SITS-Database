@@ -33,8 +33,6 @@ const Sort = (props) => {
     });
   };
 
-  console.log(props.sort);
-
   return (
     <Card>
       <div className={moreClasses.wrap}>
@@ -77,7 +75,7 @@ const Sort = (props) => {
             <option name="numberSort" value="price">
               Price
             </option>
-            <option name="numberSort" value="quantity">
+            <option name="numberSort" value="number">
               Quantity
             </option>
             <option name="numberSort" value="totalPrice">
