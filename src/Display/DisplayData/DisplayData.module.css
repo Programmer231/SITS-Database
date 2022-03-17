@@ -48,7 +48,6 @@
 
 .mainDataFormWrapper {
   width: 100%;
-  border: none;
   font-weight: bold;
   font-size: 2em;
   display: flex;
@@ -146,4 +145,11 @@
 
 .textFieldStyles {
   cursor: auto;
+}
+
+.textInputs {
+  border: 5px solid black;
+  font-weight: bold;
+  font-size: 2em;
+  width: 50%;
 }

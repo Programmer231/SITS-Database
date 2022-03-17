@@ -192,9 +192,15 @@ const DisplayData = (props) => {
                 Description:
               </h1>
               {descriptionClicked ? (
-                <h4 className={classes.textFieldStyles}>
-                  {props.mySearchedInfo.description}
-                </h4>
+                <input
+                  name="description"
+                  type="text"
+                  value={updatedFormData.description}
+                  onChange={(event) =>
+                    inputStringChangedHandler(event, "description")
+                  }
+                  className={classes.textInputs}
+                ></input>
               ) : null}
               <div className={classes.description}>
                 <h1
@@ -204,9 +210,15 @@ const DisplayData = (props) => {
                   Purpose:
                 </h1>
                 {purposeClicked ? (
-                  <h4 className={classes.textFieldStyles}>
-                    {props.mySearchedInfo.purpose}
-                  </h4>
+                  <input
+                    name="purpose"
+                    type="text"
+                    value={updatedFormData.purpose}
+                    onChange={(event) =>
+                      inputStringChangedHandler(event, "purpose")
+                    }
+                    className={classes.textInputs}
+                  ></input>
                 ) : null}
               </div>
               <div className={classes.description}>
@@ -217,9 +229,15 @@ const DisplayData = (props) => {
                   Type:
                 </h1>
                 {typeClicked ? (
-                  <h4 className={classes.textFieldStyles}>
-                    {props.mySearchedInfo.type}
-                  </h4>
+                  <input
+                    name="type"
+                    type="text"
+                    value={updatedFormData.type}
+                    onChange={(event) =>
+                      inputStringChangedHandler(event, "type")
+                    }
+                    className={classes.textInputs}
+                  ></input>
                 ) : null}
               </div>
             </div>
