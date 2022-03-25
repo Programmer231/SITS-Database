@@ -7,6 +7,7 @@ import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
 import MainFilter from "../Filter/MainFilterComponent";
 import Sort from "../Sort/Sort";
+import BarcodeReader from 'react-barcode-reader';
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -29,6 +30,16 @@ const AddField = () => {
   const partSchoolDataConstant = useRef();
   const partSITSDataConstant = useRef();
 
+  const handleScan = (data) => {
+    console.log(data);
+    setFilters([{type: 'number', sign: '=', dataValue: 'PCEPTagNumber', readValue: 'PCEP Tag Number', number: data}]);
+
+  }
+
+  const handlerError = (err) => {
+    console.log(err);
+  }
+
   const searchFunction = (search) => {
     setTimeout(() => {
       if (search === searchRef.current.value) {
@@ -44,9 +55,9 @@ const AddField = () => {
                   .substring(
                     letter,
                     searchRef.current.value.trim().length + letter
-                  )
+                  ).toString()
                   .toLowerCase() ===
-                searchRef.current.value.trim().toLowerCase()
+                searchRef.current.value.trim().toString().toLowerCase()
               ) {
                 newDataSchoolInfo.push(x);
                 counter = true;
@@ -67,9 +78,9 @@ const AddField = () => {
                   .substring(
                     letter,
                     searchRef.current.value.trim().length + letter
-                  )
+                  ).toString()
                   .toLowerCase() ===
-                searchRef.current.value.trim().toLowerCase()
+                searchRef.current.value.trim().toString().toLowerCase()
               ) {
                 newDataSITSInfo.push(y);
                 SITSCounter = true;
@@ -171,7 +182,6 @@ const AddField = () => {
               (newDataSchoolSortedInfo[j].price || 0) >
               compare
           ) {
-            console.log("ran");
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
           }
@@ -182,12 +192,40 @@ const AddField = () => {
               (newDataSchoolSortedInfo[j].price || 0) <
               compare
           ) {
-            console.log("ran");
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
           }
         }
         newDataSchoolSortedInfo[j + 1] = { ...key };
+      }
+      for (let x = 0; x < newDataSITSSortedInfo.length; x++) {
+        let key = newDataSITSSortedInfo[x];
+        let compare =
+          (newDataSITSSortedInfo[x].number || 0) *
+          (newDataSITSSortedInfo[x].price || 0);
+        let j = x - 1;
+        if (sortItems.ascending) {
+          while (
+            j >= 0 &&
+            (newDataSITSSortedInfo[j].number || 0) *
+              (newDataSITSSortedInfo[j].price || 0) >
+              compare
+          ) {
+            newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
+            j--;
+          }
+        } else {
+          while (
+            j >= 0 &&
+            (newDataSITSSortedInfo[j].number || 0) *
+              (newDataSITSSortedInfo[j].price || 0) <
+              compare
+          ) {
+            newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
+            j--;
+          }
+        }
+        newDataSITSSortedInfo[j + 1] = { ...key };
       }
     } else {
       for (let x = 0; x < newDataSchoolSortedInfo.length; x++) {
@@ -200,7 +238,6 @@ const AddField = () => {
             j >= 0 &&
             newDataSchoolSortedInfo[j][sortItems.dataValue] > compare
           ) {
-            console.log("ran");
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
           }
@@ -209,13 +246,37 @@ const AddField = () => {
             j >= 0 &&
             newDataSchoolSortedInfo[j][sortItems.dataValue] < compare
           ) {
-            console.log("ran");
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
           }
         }
 
         newDataSchoolSortedInfo[j + 1] = { ...key };
+      }
+      for (let x = 0; x < newDataSITSSortedInfo.length; x++) {
+        let key = newDataSITSSortedInfo[x];
+        let compare = newDataSITSSortedInfo[x][sortItems.dataValue];
+        let j = x - 1;
+
+        if (sortItems.ascending) {
+          while (
+            j >= 0 &&
+            newDataSITSSortedInfo[j][sortItems.dataValue] > compare
+          ) {
+            newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
+            j--;
+          }
+        } else {
+          while (
+            j >= 0 &&
+            newDataSITSSortedInfo[j][sortItems.dataValue] < compare
+          ) {
+            newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
+            j--;
+          }
+        }
+
+        newDataSITSSortedInfo[j + 1] = { ...key };
       }
     }
 
@@ -242,8 +303,8 @@ const AddField = () => {
             for (let letter = 0; letter < word.length; letter++) {
               if (
                 word
-                  .substring(letter, z.text.trim().length + letter)
-                  .toLowerCase() === z.text.trim().toLowerCase()
+                  .substring(letter, z.text.trim().length + letter).toString()
+                  .toLowerCase() === z.text.trim().toSTring().toLowerCase()
               ) {
                 newDataSchoolInfo.push(x);
                 counter = true;
@@ -261,8 +322,8 @@ const AddField = () => {
             for (let letter = 0; letter < word.length; letter++) {
               if (
                 word
-                  .substring(letter, z.text.trim().length + letter)
-                  .toLowerCase() === z.text.trim().toLowerCase()
+                  .substring(letter, z.text.trim().length + letter).toString()
+                  .toLowerCase() === z.text.trim().toString().toLowerCase()
               ) {
                 newDataSITSInfo.push(y);
                 SITSCounter = true;
@@ -304,6 +365,7 @@ const AddField = () => {
             }
           }
         } else if (z.sign === "<") {
+
           for (let item of schoolData) {
             if ((item[z.dataValue] || 0) < z.number) {
               newDataSchoolInfo.push(item);
@@ -311,7 +373,10 @@ const AddField = () => {
           }
         } else if (z.sign === "=") {
           for (let item of schoolData) {
-            if ((item[z.dataValue] || 0) === z.number) {
+            console.log(item);
+
+            console.log(z);
+            if ((item[z.dataValue] || 0) === parseInt(z.number)) {
               newDataSchoolInfo.push(item);
             }
           }
@@ -321,6 +386,7 @@ const AddField = () => {
       filterCount++;
 
       if (z.readValue === allFilters[allFilters.length - 1].readValue) {
+        console.log(newDataSITSInfo);
         sortData([...newDataSchoolInfo], [...newDataSITSInfo], sortItems);
         return;
       } else {
@@ -334,7 +400,7 @@ const AddField = () => {
         );
       }
     },
-    []
+    [sortData]
   );
 
   useEffect(() => {
@@ -438,6 +504,7 @@ const AddField = () => {
 
   return (
     <div>
+      <BarcodeReader onScan = {handleScan} onError = {handlerError}/>
       <Form certifications={certificationState} />
       <div className={classes.centerMe}>
         <Card>

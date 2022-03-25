@@ -148,8 +148,8 @@
 }
 
 .textInputs {
-  border: 5px solid black;
+  border: 2px outset grey;
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1em;
   width: 50%;
 }
