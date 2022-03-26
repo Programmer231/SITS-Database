@@ -7,7 +7,7 @@ import DisplayField from "../Display/DisplayField";
 import moreClasses from "../Display/DisplayField.module.css";
 import MainFilter from "../Filter/MainFilterComponent";
 import Sort from "../Sort/Sort";
-import BarcodeReader from 'react-barcode-reader';
+import BarcodeReader from "react-barcode-reader";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -32,13 +32,20 @@ const AddField = () => {
 
   const handleScan = (data) => {
     console.log(data);
-    setFilters([{type: 'number', sign: '=', dataValue: 'PCEPTagNumber', readValue: 'PCEP Tag Number', number: data}]);
-
-  }
+    setFilters([
+      {
+        type: "number",
+        sign: "=",
+        dataValue: "PCEPTagNumber",
+        readValue: "PCEP Tag Number",
+        number: data,
+      },
+    ]);
+  };
 
   const handlerError = (err) => {
     console.log(err);
-  }
+  };
 
   const searchFunction = (search) => {
     setTimeout(() => {
@@ -55,7 +62,8 @@ const AddField = () => {
                   .substring(
                     letter,
                     searchRef.current.value.trim().length + letter
-                  ).toString()
+                  )
+                  .toString()
                   .toLowerCase() ===
                 searchRef.current.value.trim().toString().toLowerCase()
               ) {
@@ -78,7 +86,8 @@ const AddField = () => {
                   .substring(
                     letter,
                     searchRef.current.value.trim().length + letter
-                  ).toString()
+                  )
+                  .toString()
                   .toLowerCase() ===
                 searchRef.current.value.trim().toString().toLowerCase()
               ) {
@@ -125,7 +134,9 @@ const AddField = () => {
         setSchoolOldData([...partSchoolData]);
       });
 
-    fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS.json")
+    fetch(
+      "https://sits-practice-default-rtdb.firebaseio.com/SITS/-Mz3Dj7E2lP_nWu-EPl5.json"
+    )
       .then((response) => {
         return response.json();
       })
@@ -299,12 +310,16 @@ const AddField = () => {
         let counter = false;
         let SITSCounter = false;
         for (let x of schoolData) {
-          for (let word of x[z.dataValue].split(" ")) {
+          if (!x[z.dataValue]) {
+            continue;
+          }
+          for (let word of x[z.dataValue].toString().split(" ")) {
             for (let letter = 0; letter < word.length; letter++) {
               if (
                 word
-                  .substring(letter, z.text.trim().length + letter).toString()
-                  .toLowerCase() === z.text.trim().toSTring().toLowerCase()
+                  .substring(letter, z.text.trim().length + letter)
+                  .toString()
+                  .toLowerCase() === z.text.trim().toString().toLowerCase()
               ) {
                 newDataSchoolInfo.push(x);
                 counter = true;
@@ -318,11 +333,15 @@ const AddField = () => {
           }
         }
         for (let y of SITSData) {
-          for (let word of y[z.dataValue].split(" ")) {
+          if (!y[z.dataValue]) {
+            continue;
+          }
+          for (let word of y[z.dataValue].toString().split(" ")) {
             for (let letter = 0; letter < word.length; letter++) {
               if (
                 word
-                  .substring(letter, z.text.trim().length + letter).toString()
+                  .substring(letter, z.text.trim().length + letter)
+                  .toString()
                   .toLowerCase() === z.text.trim().toString().toLowerCase()
               ) {
                 newDataSITSInfo.push(y);
@@ -344,16 +363,31 @@ const AddField = () => {
                 newDataSchoolInfo.push(item);
               }
             }
+            for (let item of SITSData) {
+              if ((item.price || 0) * (item.number || 0) > z.number) {
+                newDataSITSInfo.push(item);
+              }
+            }
           } else if (z.sign === "<") {
             for (let item of schoolData) {
               if ((item.price || 0) * (item.number || 0) < z.number) {
                 newDataSchoolInfo.push(item);
               }
             }
+            for (let item of SITSData) {
+              if ((item.price || 0) * (item.number || 0) < z.number) {
+                newDataSITSInfo.push(item);
+              }
+            }
           } else if (z.sign === "=") {
             for (let item of schoolData) {
               if ((item.price || 0) * (item.number || 0) === z.number) {
                 newDataSchoolInfo.push(item);
+              }
+            }
+            for (let item of SITSData) {
+              if ((item.price || 0) * (item.number || 0) === z.number) {
+                newDataSITSInfo.push(item);
               }
             }
           }
@@ -364,20 +398,31 @@ const AddField = () => {
               newDataSchoolInfo.push(item);
             }
           }
+          for (let item of SITSData) {
+            if ((item[z.dataValue] || 0) > z.number) {
+              newDataSITSInfo.push(item);
+            }
+          }
         } else if (z.sign === "<") {
-
           for (let item of schoolData) {
             if ((item[z.dataValue] || 0) < z.number) {
               newDataSchoolInfo.push(item);
             }
           }
+          for (let item of SITSData) {
+            if ((item[z.dataValue] || 0) < z.number) {
+              newDataSITSInfo.push(item);
+            }
+          }
         } else if (z.sign === "=") {
           for (let item of schoolData) {
-            console.log(item);
-
-            console.log(z);
-            if ((item[z.dataValue] || 0) === parseInt(z.number)) {
+            if ((item[z.dataValue] || 0) === z.number) {
               newDataSchoolInfo.push(item);
+            }
+          }
+          for (let item of SITSData) {
+            if ((item[z.dataValue] || 0) === z.number) {
+              newDataSITSInfo.push(item);
             }
           }
         }
@@ -504,7 +549,7 @@ const AddField = () => {
 
   return (
     <div>
-      <BarcodeReader onScan = {handleScan} onError = {handlerError}/>
+      <BarcodeReader onScan={handleScan} onError={handlerError} />
       <Form certifications={certificationState} />
       <div className={classes.centerMe}>
         <Card>

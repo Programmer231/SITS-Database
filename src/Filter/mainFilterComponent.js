@@ -118,6 +118,9 @@ const MainFilter = (props) => {
                 <option name="type" value="type">
                   Type
                 </option>
+                <option name="serialNumber" value="serialNumber">
+                  Serial Number
+                </option>
               </select>
 
               <TextComparison
