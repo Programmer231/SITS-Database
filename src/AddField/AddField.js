@@ -25,7 +25,6 @@ const AddField = () => {
   const [partSITSInfo, setPartSITSInfo] = useState([]);
   const [schoolOldData, setSchoolOldData] = useState([]);
   const [SITSOldData, setSITSOldData] = useState([]);
-
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
   const partSITSDataConstant = useRef();
@@ -241,13 +240,13 @@ const AddField = () => {
     } else {
       for (let x = 0; x < newDataSchoolSortedInfo.length; x++) {
         let key = newDataSchoolSortedInfo[x];
-        let compare = newDataSchoolSortedInfo[x][sortItems.dataValue];
+        let compare = newDataSchoolSortedInfo[x][sortItems.dataValue] || 0;
         let j = x - 1;
 
         if (sortItems.ascending) {
           while (
             j >= 0 &&
-            newDataSchoolSortedInfo[j][sortItems.dataValue] > compare
+            (newDataSchoolSortedInfo[j][sortItems.dataValue] || 0) > compare
           ) {
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
@@ -255,7 +254,7 @@ const AddField = () => {
         } else {
           while (
             j >= 0 &&
-            newDataSchoolSortedInfo[j][sortItems.dataValue] < compare
+            (newDataSchoolSortedInfo[j][sortItems.dataValue] || 0) < compare
           ) {
             newDataSchoolSortedInfo[j + 1] = newDataSchoolSortedInfo[j];
             j--;
@@ -266,13 +265,13 @@ const AddField = () => {
       }
       for (let x = 0; x < newDataSITSSortedInfo.length; x++) {
         let key = newDataSITSSortedInfo[x];
-        let compare = newDataSITSSortedInfo[x][sortItems.dataValue];
+        let compare = newDataSITSSortedInfo[x][sortItems.dataValue] || 0;
         let j = x - 1;
 
         if (sortItems.ascending) {
           while (
             j >= 0 &&
-            newDataSITSSortedInfo[j][sortItems.dataValue] > compare
+            (newDataSITSSortedInfo[j][sortItems.dataValue] || 0) > compare
           ) {
             newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
             j--;
@@ -280,7 +279,7 @@ const AddField = () => {
         } else {
           while (
             j >= 0 &&
-            newDataSITSSortedInfo[j][sortItems.dataValue] < compare
+            (newDataSITSSortedInfo[j][sortItems.dataValue] || 0) < compare
           ) {
             newDataSITSSortedInfo[j + 1] = newDataSITSSortedInfo[j];
             j--;
