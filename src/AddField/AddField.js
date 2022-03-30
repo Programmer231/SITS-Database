@@ -46,67 +46,83 @@ const AddField = () => {
     console.log(err);
   };
 
-  const searchFunction = (search) => {
+  const searchLetterFunction = (
+    search,
+    functionCalled,
+    schoolData,
+    SITSData
+  ) => {
+    let newDataSchoolInfo = [];
+    let newDataSITSInfo = [];
+    let counter = false;
+    let SITSCounter = false;
+    const WantedWord = search.split(" ")[functionCalled];
+
+    for (let x of schoolData) {
+      for (let word of x.part.split(" ")) {
+        for (let letter = 0; letter < word.length; letter++) {
+          if (
+            word
+              .substring(letter, WantedWord.trim().length + letter)
+              .toString()
+              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+          ) {
+            newDataSchoolInfo.push(x);
+            counter = true;
+            break;
+          }
+        }
+        if (counter) {
+          counter = false;
+          break;
+        }
+      }
+    }
+    for (let y of SITSData) {
+      for (let word of y.part.split(" ")) {
+        for (let letter = 0; letter < word.length; letter++) {
+          if (
+            word
+              .substring(letter, WantedWord.trim().length + letter)
+              .toString()
+              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+          ) {
+            newDataSITSInfo.push(y);
+            SITSCounter = true;
+            break;
+          }
+        }
+        if (SITSCounter) {
+          SITSCounter = false;
+          break;
+        }
+      }
+    }
+
+    if (functionCalled === search.trim().split(" ").length - 1) {
+      setPartSchoolInfo([...newDataSchoolInfo]);
+      setPartSITSInfo([...newDataSITSInfo]);
+      setSchoolOldData([...newDataSchoolInfo]);
+      setSITSOldData([...newDataSITSInfo]);
+    } else {
+      searchLetterFunction(
+        search,
+        functionCalled + 1,
+        newDataSchoolInfo,
+        newDataSITSInfo
+      );
+    }
+  };
+
+  const searchFunction = (search, data) => {
     setTimeout(() => {
       if (search === searchRef.current.value) {
-        let newDataSchoolInfo = [];
-        let newDataSITSInfo = [];
-        let counter = false;
-        let SITSCounter = false;
-        for (let x of partSchoolDataConstant.current) {
-          for (let word of x.part.split(" ")) {
-            for (let letter = 0; letter < word.length; letter++) {
-              if (
-                word
-                  .substring(
-                    letter,
-                    searchRef.current.value.trim().length + letter
-                  )
-                  .toString()
-                  .toLowerCase() ===
-                searchRef.current.value.trim().toString().toLowerCase()
-              ) {
-                newDataSchoolInfo.push(x);
-                counter = true;
-                break;
-              }
-            }
-            if (counter) {
-              counter = false;
-              break;
-            }
-          }
-        }
-        for (let y of partSITSDataConstant.current) {
-          for (let word of y.part.split(" ")) {
-            for (let letter = 0; letter < word.length; letter++) {
-              if (
-                word
-                  .substring(
-                    letter,
-                    searchRef.current.value.trim().length + letter
-                  )
-                  .toString()
-                  .toLowerCase() ===
-                searchRef.current.value.trim().toString().toLowerCase()
-              ) {
-                newDataSITSInfo.push(y);
-                SITSCounter = true;
-                break;
-              }
-            }
-            if (SITSCounter) {
-              SITSCounter = false;
-              break;
-            }
-          }
-        }
-        setPartSchoolInfo([...newDataSchoolInfo]);
-        setPartSITSInfo([...newDataSITSInfo]);
-        setSchoolOldData([...newDataSchoolInfo]);
-        setSITSOldData([...newDataSITSInfo]);
-        newDataSchoolInfo = [];
-        newDataSITSInfo = [];
+        searchLetterFunction(
+          search,
+          0,
+          partSchoolDataConstant.current,
+          partSITSDataConstant.current
+        );
       }
     }, 1000);
   };
