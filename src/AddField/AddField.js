@@ -31,15 +31,28 @@ const AddField = () => {
 
   const handleScan = (data) => {
     console.log(data);
-    setFilters([
-      {
-        type: "number",
-        sign: "=",
-        dataValue: "PCEPTagNumber",
-        readValue: "PCEP Tag Number",
-        number: data,
-      },
-    ]);
+
+    if(parseInt(data)){
+      setFilters([
+        {
+          type: "number",
+          sign: "=",
+          dataValue: "PCEPTagNumber",
+          readValue: "PCEP Tag Number",
+          number: data,
+        },
+      ]);
+    } else {
+      setFilters([
+        {
+          type: "text",
+          dataValue: "serialNumber",
+          readValue: "Serial Number",
+          text: data,
+        },
+      ]);
+    }
+    
   };
 
   const handlerError = (err) => {
