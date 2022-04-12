@@ -30,7 +30,6 @@ const AddField = () => {
   const partSITSDataConstant = useRef();
 
   const handleScan = (data) => {
-    console.log(data);
 
     if(parseInt(data)){
       setFilters([
@@ -123,6 +122,81 @@ const AddField = () => {
         functionCalled + 1,
         newDataSchoolInfo,
         newDataSITSInfo
+      );
+    }
+  };
+
+  const filterSearchLetterFunction = (
+    search,
+    functionCalled,
+    schoolData,
+    SITSData,
+    filter
+  ) => {
+    let newDataSchoolInfo = [];
+    let newDataSITSInfo = [];
+    let counter = false;
+    let SITSCounter = false;
+    const WantedWord = search.split(" ")[functionCalled];
+
+    for (let x of schoolData) {
+      if(!x[filter.dataValue]){
+        continue;
+      }
+      for (let word of x[filter.dataValue].split(" ")) {
+        for (let letter = 0; letter < word.length; letter++) {
+          if (
+            word
+              .substring(letter, WantedWord.trim().length + letter)
+              .toString()
+              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+          ) {
+            newDataSchoolInfo.push(x);
+            counter = true;
+            break;
+          }
+        }
+        if (counter) {
+          counter = false;
+          break;
+        }
+      }
+    }
+    for (let y of SITSData) {
+      if(!y[filter.dataValue]){
+        continue;
+      }
+      for (let word of y[filter.dataValue].split(" ")) {
+        for (let letter = 0; letter < word.length; letter++) {
+          if (
+            word
+              .substring(letter, WantedWord.trim().length + letter)
+              .toString()
+              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+          ) {
+            newDataSITSInfo.push(y);
+            SITSCounter = true;
+            break;
+          }
+        }
+        if (SITSCounter) {
+          SITSCounter = false;
+          break;
+        }
+      }
+    }
+
+
+
+    if (functionCalled === search.trim().split(" ").length - 1) {
+      return ([[...newDataSchoolInfo], [...newDataSITSInfo]]);
+    } else {
+      return filterSearchLetterFunction(
+        search,
+        functionCalled + 1,
+        newDataSchoolInfo,
+        newDataSITSInfo, 
+        filter
       );
     }
   };
@@ -318,8 +392,6 @@ const AddField = () => {
         newDataSITSSortedInfo[j + 1] = { ...key };
       }
     }
-
-    console.log(newDataSchoolSortedInfo);
     setPartSchoolInfo([...newDataSchoolSortedInfo]);
     setPartSITSInfo([...newDataSITSSortedInfo]);
     return;
@@ -335,54 +407,9 @@ const AddField = () => {
       let newDataSITSInfo = [];
       let z = { ...filter };
       if (z.type === "text") {
-        let counter = false;
-        let SITSCounter = false;
-        for (let x of schoolData) {
-          if (!x[z.dataValue]) {
-            continue;
-          }
-          for (let word of x[z.dataValue].toString().split(" ")) {
-            for (let letter = 0; letter < word.length; letter++) {
-              if (
-                word
-                  .substring(letter, z.text.trim().length + letter)
-                  .toString()
-                  .toLowerCase() === z.text.trim().toString().toLowerCase()
-              ) {
-                newDataSchoolInfo.push(x);
-                counter = true;
-                break;
-              }
-            }
-            if (counter) {
-              counter = false;
-              break;
-            }
-          }
-        }
-        for (let y of SITSData) {
-          if (!y[z.dataValue]) {
-            continue;
-          }
-          for (let word of y[z.dataValue].toString().split(" ")) {
-            for (let letter = 0; letter < word.length; letter++) {
-              if (
-                word
-                  .substring(letter, z.text.trim().length + letter)
-                  .toString()
-                  .toLowerCase() === z.text.trim().toString().toLowerCase()
-              ) {
-                newDataSITSInfo.push(y);
-                SITSCounter = true;
-                break;
-              }
-            }
-            if (SITSCounter) {
-              SITSCounter = false;
-              break;
-            }
-          }
-        }
+        const data = filterSearchLetterFunction(z.text, 0, schoolData, SITSData, filter);
+        newDataSchoolInfo = newDataSchoolInfo.concat(data[0]);
+        newDataSITSInfo = newDataSITSInfo.concat(data[1]);
       } else if (z.type === "number") {
         if (z.dataValue === "totalPrice") {
           if (z.sign === ">") {
@@ -459,7 +486,6 @@ const AddField = () => {
       filterCount++;
 
       if (z.readValue === allFilters[allFilters.length - 1].readValue) {
-        console.log(newDataSITSInfo);
         sortData([...newDataSchoolInfo], [...newDataSITSInfo], sortItems);
         return;
       } else {
