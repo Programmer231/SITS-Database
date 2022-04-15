@@ -82,6 +82,15 @@ input[type="checkbox"] {
   align-items: center;
 }
 
+@media (max-width: 560px) {
+  .addFieldCheckbox {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .spaceOutSearchField {
   margin: auto;
   margin-top: 50px;

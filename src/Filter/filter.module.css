@@ -39,3 +39,11 @@
   border-top: 5px solid #77002e;
   padding: 20px;
 }
+
+@media (max-width: 560px) {
+  .filtersWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
