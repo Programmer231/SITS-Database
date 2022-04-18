@@ -32,13 +32,14 @@ const AddField = () => {
   const handleScan = (data) => {
 
     if(parseInt(data)){
+
       setFilters([
         {
           type: "number",
           sign: "=",
           dataValue: "PCEPTagNumber",
           readValue: "PCEP Tag Number",
-          number: data,
+          number: parseInt(data),
         },
       ]);
     } else {
@@ -47,7 +48,7 @@ const AddField = () => {
           type: "text",
           dataValue: "serialNumber",
           readValue: "Serial Number",
-          text: data,
+          text: data.toString(),
         },
       ]);
     }
@@ -143,7 +144,7 @@ const AddField = () => {
       if(!x[filter.dataValue]){
         continue;
       }
-      for (let word of x[filter.dataValue].split(" ")) {
+      for (let word of x[filter.dataValue].toString().split(" ")) {
         for (let letter = 0; letter < word.length; letter++) {
           if (
             word
@@ -163,10 +164,12 @@ const AddField = () => {
       }
     }
     for (let y of SITSData) {
+      console.log(y[filter.dataValue])
       if(!y[filter.dataValue]){
         continue;
       }
-      for (let word of y[filter.dataValue].split(" ")) {
+
+      for (let word of y[filter.dataValue].toString().split(" ")) {
         for (let letter = 0; letter < word.length; letter++) {
           if (
             word
@@ -215,6 +218,7 @@ const AddField = () => {
   };
 
   useEffect(() => {
+
     let partSchoolData = [];
     let partSITSData = [];
 
