@@ -155,3 +155,10 @@
   font-size: 1em;
   width: 50%;
 }
+
+.flexButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

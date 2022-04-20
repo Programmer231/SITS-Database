@@ -269,7 +269,10 @@ const DisplayData = (props) => {
             <h1>NONE</h1>
           )}
           <div className={classes.actions}>
+            <div className = {classes.flexButtons}>
             <button onClick={submitHandler}>Update</button>
+            <button onClick = {() => props.deleteHandler(props.specialID, props.firebaseID, props.mySearchedInfo.id)} style = {{backgroundColor: 'red'}}>DELETE</button>
+            </div>
           </div>
         </div>
       </Card>

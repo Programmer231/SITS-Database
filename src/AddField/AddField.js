@@ -8,6 +8,8 @@ import moreClasses from "../Display/DisplayField.module.css";
 import MainFilter from "../Filter/MainFilterComponent";
 import Sort from "../Sort/Sort";
 import BarcodeReader from "react-barcode-reader";
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '../Modal/Modal';
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -20,6 +22,8 @@ const AddField = () => {
   const [filters, setFilters] = useState([]);
   const [sortItems, setSortItems] = useState({});
   const [searchPart, setSearchPart] = useState({ part: "" });
+  const [deleteID, setDeleteID] = useState({});
+  const [showState, setShowState] = useState(false);
 
   const [partSchoolInfo, setPartSchoolInfo] = useState([]);
   const [partSITSInfo, setPartSITSInfo] = useState([]);
@@ -54,6 +58,15 @@ const AddField = () => {
     }
     
   };
+
+  const clickOff = () => {
+    setShowState(false);
+  }
+
+  const deleteHandler = (specialID, firebaseID, itemId) => {
+    setDeleteID({specialID, firebaseID, itemId});
+    setShowState(true);
+  }
 
   const handlerError = (err) => {
     console.log(err);
@@ -700,8 +713,13 @@ const AddField = () => {
           certifications={certificationState}
           setSearchedSchoolInfo={setPartSchoolInfo}
           setSearchedSITSInfo={setPartSITSInfo}
+          deleteHandler = {deleteHandler}
         />
       }
+      
+       <Backdrop open = {showState} onClick = {clickOff}>
+        <Modal ID = {deleteID} onClick = {clickOff}/>
+      </Backdrop>
     </div>
   );
 };

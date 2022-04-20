@@ -8,6 +8,9 @@ const DisplayField = (props) => {
   const [numberSITSElements, setNumberSITSElements] = useState([]);
   const [dataSelected, setDataSelected] = useState(true);
 
+
+
+
   const handleDataSelected = (id) => {
     setDataSelected((prevState) => {
       if (id === 0 && prevState) {
@@ -118,6 +121,7 @@ const DisplayField = (props) => {
                   definedValues={numberElements[index][0]}
                   undefinedValues={numberElements[index][1]}
                   mySearchedInfo={props.searchedSchoolInfo[index]}
+                  deleteHandler = {props.deleteHandler}
                 />
               );
             })
@@ -136,6 +140,7 @@ const DisplayField = (props) => {
                   definedValues={numberSITSElements[index][0]}
                   undefinedValues={numberSITSElements[index][1]}
                   mySearchedInfo={props.searchedSITSInfo[index]}
+                  deleteHandler = {props.deleteHandler}
                 />
               );
             })
