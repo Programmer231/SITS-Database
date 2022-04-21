@@ -5,7 +5,6 @@ import classes from './Modal.module.css';
 const Modal = (props) => {
 
     const deleteItem = () => {
-        console.log("ran")
         fetch(`https://sits-practice-default-rtdb.firebaseio.com/${props.ID.specialID}/${props.ID.firebaseID}/${props.ID.itemId}/.json`, {method: 'DELETE', body: {"Content-Type": "application/json"}}).then(() => {
             props.onClick();
         })
@@ -17,7 +16,9 @@ const Modal = (props) => {
             padding: '20px',
             width: "50%",
             borderRadius: '5px',
-            textAlign: 'center'}}>
+            textAlign: 'center',
+            zIndex: -1}}
+            >
                 <h1>Are you sure you want to delete this item?</h1>
                 <div className = {classes.actions} >
                 <div className = {classes.flexItems}>

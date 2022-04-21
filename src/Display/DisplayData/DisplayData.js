@@ -85,7 +85,6 @@ const DisplayData = (props) => {
   };
 
   const submitHandler = () => {
-    console.log(updatedFormData);
     const finalData = { ...updatedFormData };
 
     //These lines need modification when we add the numbers to them

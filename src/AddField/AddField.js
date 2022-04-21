@@ -140,7 +140,7 @@ const AddField = () => {
     }
   };
 
-  const filterSearchLetterFunction = (
+  const filterSearchLetterFunction = useCallback((
     search,
     functionCalled,
     schoolData,
@@ -177,7 +177,6 @@ const AddField = () => {
       }
     }
     for (let y of SITSData) {
-      console.log(y[filter.dataValue])
       if(!y[filter.dataValue]){
         continue;
       }
@@ -215,7 +214,7 @@ const AddField = () => {
         filter
       );
     }
-  };
+  }, []);
 
   const searchFunction = (search, data) => {
     setTimeout(() => {
@@ -236,7 +235,7 @@ const AddField = () => {
     let partSITSData = [];
 
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json"
+      "https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json"
     )
       .then((response) => {
         return response.json();
@@ -254,7 +253,7 @@ const AddField = () => {
       });
 
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/SITS/-Mz3Dj7E2lP_nWu-EPl5.json"
+      "https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json"
     )
       .then((response) => {
         return response.json();
@@ -516,7 +515,7 @@ const AddField = () => {
         );
       }
     },
-    [sortData]
+    [sortData, filterSearchLetterFunction]
   );
 
   useEffect(() => {

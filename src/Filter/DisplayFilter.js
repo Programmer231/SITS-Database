@@ -1,7 +1,6 @@
 import classes from "./DisplayFilter.module.css";
 
 const DisplayFilter = (props) => {
-  console.log(props);
 
   return (
     <div

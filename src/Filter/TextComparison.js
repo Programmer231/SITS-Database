@@ -10,7 +10,6 @@ const TextComparison = (props) => {
   };
 
   const addTextFilter = () => {
-    console.log(inputValue);
 
     props.addFilter({
       type: "text",

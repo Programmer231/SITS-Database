@@ -8,7 +8,6 @@ fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS/SITS.json")
   })
   .then((data) => {
     for (let x of data) {
-      console.log(v4());
       sitsData[v4()] = x;
     }
     fetch("https://sits-practice-default-rtdb.firebaseio.com/SITS/SITS.json", {

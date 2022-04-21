@@ -36,7 +36,6 @@ const Form = (props) => {
   }
 
   const inputStringChangedHandler = (event, name) => {
-    console.log(event);
     setFormData((prevState) => {
       return {
         ...prevState,
@@ -46,7 +45,6 @@ const Form = (props) => {
   };
 
   const inputNumberChangedHandler = (event, name) => {
-    console.log(event);
     setFormData((prevState) => {
       return {
         ...prevState,
@@ -67,29 +65,56 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/School/-MwwnSmoggPm4EINVQKA.json",
-      {
-        method: "POST",
-        body: JSON.stringify({ ...formData, ...checkedData }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then(() => {
-      setFormData({
-        part: "",
-        description: "",
-        number: 0,
-        price: 0,
-        PCEPTagNumber: 0,
-        assetTagNumber: 0,
-        serialNumber: "",
-        purpose: "",
-        type: "",
+    if(dataType === "School"){
+      fetch(
+        "https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json",
+        {
+          method: "POST",
+          body: JSON.stringify({ ...formData, ...checkedData }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then(() => {
+        setFormData({
+          part: "",
+          description: "",
+          number: 0,
+          price: 0,
+          PCEPTagNumber: 0,
+          assetTagNumber: 0,
+          serialNumber: "",
+          purpose: "",
+          type: "",
+        });
+        setCheckedData({});
       });
-      setCheckedData({});
-    });
+    } else {
+      fetch(
+        "https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json",
+        {
+          method: "POST",
+          body: JSON.stringify({ ...formData, ...checkedData }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then(() => {
+        setFormData({
+          part: "",
+          description: "",
+          number: 0,
+          price: 0,
+          PCEPTagNumber: 0,
+          assetTagNumber: 0,
+          serialNumber: "",
+          purpose: "",
+          type: "",
+        });
+        setCheckedData({});
+      });
+    }
+
   };
 
   return (
