@@ -108,6 +108,10 @@ input[type="checkbox"] {
   margin-top: 1rem;
   text-align: center;
   padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .printActions button {
@@ -125,4 +129,9 @@ input[type="checkbox"] {
 .printActions button:active {
   background-color: #a50e48;
   border-color: #a50e48;
+}
+
+.centerPrintButtons {
+  margin: auto;
+  width: 50%;
 }

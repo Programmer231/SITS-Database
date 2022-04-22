@@ -8,9 +8,9 @@ import moreClasses from "../Display/DisplayField.module.css";
 import MainFilter from "../Filter/MainFilterComponent";
 import Sort from "../Sort/Sort";
 import BarcodeReader from "react-barcode-reader";
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '../Modal/Modal';
-import printJS from 'print-js';
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "../Modal/Modal";
+import printJS from "print-js";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -35,10 +35,7 @@ const AddField = () => {
   const partSITSDataConstant = useRef();
 
   const handleScan = (data) => {
-
-    if(parseInt(data)){
-
-
+    if (parseInt(data)) {
       setFilters([
         {
           type: "number",
@@ -58,17 +55,16 @@ const AddField = () => {
         },
       ]);
     }
-    
   };
 
   const clickOff = () => {
     setShowState(false);
-  }
+  };
 
   const deleteHandler = (specialID, firebaseID, itemId) => {
-    setDeleteID({specialID, firebaseID, itemId});
+    setDeleteID({ specialID, firebaseID, itemId });
     setShowState(true);
-  }
+  };
 
   const handlerError = (err) => {
     console.log(err);
@@ -142,81 +138,76 @@ const AddField = () => {
     }
   };
 
-  const filterSearchLetterFunction = useCallback((
-    search,
-    functionCalled,
-    schoolData,
-    SITSData,
-    filter
-  ) => {
-    let newDataSchoolInfo = [];
-    let newDataSITSInfo = [];
-    let counter = false;
-    let SITSCounter = false;
-    const WantedWord = search.split(" ")[functionCalled];
+  const filterSearchLetterFunction = useCallback(
+    (search, functionCalled, schoolData, SITSData, filter) => {
+      let newDataSchoolInfo = [];
+      let newDataSITSInfo = [];
+      let counter = false;
+      let SITSCounter = false;
+      const WantedWord = search.split(" ")[functionCalled];
 
-    for (let x of schoolData) {
-      if(!x[filter.dataValue]){
-        continue;
-      }
-      for (let word of x[filter.dataValue].toString().split(" ")) {
-        for (let letter = 0; letter < word.length; letter++) {
-          if (
-            word
-              .substring(letter, WantedWord.trim().length + letter)
-              .toString()
-              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
-          ) {
-            newDataSchoolInfo.push(x);
-            counter = true;
+      for (let x of schoolData) {
+        if (!x[filter.dataValue]) {
+          continue;
+        }
+        for (let word of x[filter.dataValue].toString().split(" ")) {
+          for (let letter = 0; letter < word.length; letter++) {
+            if (
+              word
+                .substring(letter, WantedWord.trim().length + letter)
+                .toString()
+                .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+            ) {
+              newDataSchoolInfo.push(x);
+              counter = true;
+              break;
+            }
+          }
+          if (counter) {
+            counter = false;
             break;
           }
         }
-        if (counter) {
-          counter = false;
-          break;
+      }
+      for (let y of SITSData) {
+        if (!y[filter.dataValue]) {
+          continue;
         }
-      }
-    }
-    for (let y of SITSData) {
-      if(!y[filter.dataValue]){
-        continue;
-      }
 
-      for (let word of y[filter.dataValue].toString().split(" ")) {
-        for (let letter = 0; letter < word.length; letter++) {
-          if (
-            word
-              .substring(letter, WantedWord.trim().length + letter)
-              .toString()
-              .toLowerCase() === WantedWord.trim().toString().toLowerCase()
-          ) {
-            newDataSITSInfo.push(y);
-            SITSCounter = true;
+        for (let word of y[filter.dataValue].toString().split(" ")) {
+          for (let letter = 0; letter < word.length; letter++) {
+            if (
+              word
+                .substring(letter, WantedWord.trim().length + letter)
+                .toString()
+                .toLowerCase() === WantedWord.trim().toString().toLowerCase()
+            ) {
+              newDataSITSInfo.push(y);
+              SITSCounter = true;
+              break;
+            }
+          }
+          if (SITSCounter) {
+            SITSCounter = false;
             break;
           }
         }
-        if (SITSCounter) {
-          SITSCounter = false;
-          break;
-        }
       }
-    }
 
-
-
-    if (functionCalled === search.trim().split(" ").length - 1) {
-      return ([[...newDataSchoolInfo], [...newDataSITSInfo]]);
-    } else {
-      return filterSearchLetterFunction(
-        search,
-        functionCalled + 1,
-        newDataSchoolInfo,
-        newDataSITSInfo, 
-        filter
-      );
-    }
-  }, []);
+      if (functionCalled === search.trim().split(" ").length - 1) {
+        return [[...newDataSchoolInfo], [...newDataSITSInfo]];
+      } else {
+        return filterSearchLetterFunction(
+          search,
+          functionCalled + 1,
+          newDataSchoolInfo,
+          newDataSITSInfo,
+          filter
+        );
+      }
+    },
+    []
+  );
 
   const searchFunction = (search, data) => {
     setTimeout(() => {
@@ -232,7 +223,6 @@ const AddField = () => {
   };
 
   useEffect(() => {
-
     let partSchoolData = [];
     let partSITSData = [];
 
@@ -247,7 +237,11 @@ const AddField = () => {
           if (!data[key].part) {
             continue;
           }
-          partSchoolData.push({ id: key, ...data[key], "totalPrice": data[key].number * data[key].price });
+          partSchoolData.push({
+            id: key,
+            ...data[key],
+            totalPrice: (data[key].number * data[key].price).toFixed(2),
+          });
         }
         setPartSchoolInfo([...partSchoolData]);
         partSchoolDataConstant.current = [...partSchoolData];
@@ -425,7 +419,13 @@ const AddField = () => {
       let newDataSITSInfo = [];
       let z = { ...filter };
       if (z.type === "text") {
-        const data = filterSearchLetterFunction(z.text, 0, schoolData, SITSData, filter);
+        const data = filterSearchLetterFunction(
+          z.text,
+          0,
+          schoolData,
+          SITSData,
+          filter
+        );
         newDataSchoolInfo = newDataSchoolInfo.concat(data[0]);
         newDataSITSInfo = newDataSITSInfo.concat(data[1]);
       } else if (z.type === "number") {
@@ -705,16 +705,53 @@ const AddField = () => {
       >
         Data
       </h1>
-      <div className = {classes.printActions}>
-      <button className = {classes.printButton} onClick = {() => printJS({printable: partSchoolInfo, type: 'json', properties: ["part",
-    "number",
-    "price",
-    "totalPrice",
-    "PCEPTagNumber",
-    "assetTagNumber",
-    "serialNumber",
-    "purpose",
-    "type"]})}>Print to PDF</button>
+      <div className={classes.centerPrintButtons}>
+        <div className={classes.printActions}>
+          <button
+            className={classes.printButton}
+            onClick={() =>
+              printJS({
+                printable: partSchoolInfo,
+                type: "json",
+                properties: [
+                  "part",
+                  "number",
+                  "price",
+                  "totalPrice",
+                  "PCEPTagNumber",
+                  "assetTagNumber",
+                  "serialNumber",
+                  "purpose",
+                  "type",
+                ],
+              })
+            }
+          >
+            Print School Data to PDF
+          </button>
+          <button
+            className={classes.printButton}
+            onClick={() =>
+              printJS({
+                printable: partSITSInfo,
+                type: "json",
+                properties: [
+                  "part",
+                  "number",
+                  "price",
+                  "totalPrice",
+                  "PCEPTagNumber",
+                  "assetTagNumber",
+                  "serialNumber",
+                  "purpose",
+                  "type",
+                ],
+              })
+            }
+          >
+            Print SITS Data to PDF
+          </button>
+        </div>
       </div>
       {
         <DisplayField
@@ -725,12 +762,12 @@ const AddField = () => {
           certifications={certificationState}
           setSearchedSchoolInfo={setPartSchoolInfo}
           setSearchedSITSInfo={setPartSITSInfo}
-          deleteHandler = {deleteHandler}
+          deleteHandler={deleteHandler}
         />
       }
-      
-       <Backdrop open = {showState} onClick = {clickOff}>
-        <Modal ID = {deleteID} onClick = {clickOff}/>
+
+      <Backdrop open={showState} onClick={clickOff}>
+        <Modal ID={deleteID} onClick={clickOff} />
       </Backdrop>
     </div>
   );
