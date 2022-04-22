@@ -10,8 +10,7 @@ import Sort from "../Sort/Sort";
 import BarcodeReader from "react-barcode-reader";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '../Modal/Modal';
-const UPC = require('upc-database');
-const upc = new UPC('E0CAFA7B01BFF593C86DF0A4629C3AF6');
+import printJS from 'print-js';
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -37,11 +36,8 @@ const AddField = () => {
 
   const handleScan = (data) => {
 
-    console.log(data);
-
     if(parseInt(data)){
 
-      console.log(data);
 
       setFilters([
         {
@@ -251,7 +247,7 @@ const AddField = () => {
           if (!data[key].part) {
             continue;
           }
-          partSchoolData.push({ id: key, ...data[key] });
+          partSchoolData.push({ id: key, ...data[key], "totalPrice": data[key].number * data[key].price });
         }
         setPartSchoolInfo([...partSchoolData]);
         partSchoolDataConstant.current = [...partSchoolData];
@@ -709,6 +705,17 @@ const AddField = () => {
       >
         Data
       </h1>
+      <div className = {classes.printActions}>
+      <button className = {classes.printButton} onClick = {() => printJS({printable: partSchoolInfo, type: 'json', properties: ["part",
+    "number",
+    "price",
+    "totalPrice",
+    "PCEPTagNumber",
+    "assetTagNumber",
+    "serialNumber",
+    "purpose",
+    "type"]})}>Print to PDF</button>
+      </div>
       {
         <DisplayField
           inputChangedHandler={displayDataHandler}
