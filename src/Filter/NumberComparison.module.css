@@ -40,4 +40,10 @@
     margin-top: 50px;
     margin-bottom: 50px;
   }
+  .textComparisonInputs {
+    border: 5px black solid;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 50%;
+  }
 }
