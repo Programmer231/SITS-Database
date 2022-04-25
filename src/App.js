@@ -21,10 +21,10 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route exact path="/database" element={<PrivateRoute />}>
-              <Route exact path="/database" element={<AddField />} />
+            <Route path="/database" element={<PrivateRoute />}>
+              <Route path="/database" element={<AddField />} />
             </Route>
-            <Route exact path="/" element={<Login smileyFace={smileyFace} />} />
+            <Route path="/" element={<Login smileyFace={smileyFace} />} />
           </Routes>
         </Router>
       </AuthProvider>
