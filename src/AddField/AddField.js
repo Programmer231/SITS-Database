@@ -267,7 +267,7 @@ const AddField = () => {
         partSITSDataConstant.current = [...partSITSData];
         setSITSOldData([...partSITSData]);
       });
-  }, []);
+  }, [currentUser.multiFactor.user.accessToken]);
 
   const addFieldCheckboxChangedHandler = (name) => {
     setAddField((prevState) => {
@@ -619,7 +619,7 @@ const AddField = () => {
         setCertificationState(certificationData);
       });
     setAddField({ type: "", number: false, checkboxBoolean: false });
-  }, []);
+  }, [currentUser.multiFactor.user.accessToken]);
 
   return (
     <div>

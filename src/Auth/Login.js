@@ -1,13 +1,12 @@
 import classes from "../Form/NewMeetupForm.module.css";
 import loginClasses from "./Login.module.css";
 import Card from "../UI/Card";
-import BeHappy from "../UI/assets/images/BeHappy.png";
+import BeHappy from "../UI/assets/images/smile.jpg";
 import { useAuth } from "../Contexts/AuthContext";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { useState } from "react";
 
 const Login = (props) => {
-  const navigate = useNavigate();
   const { currentUser, login } = useAuth();
 
   const [email, setEmail] = useState("");
