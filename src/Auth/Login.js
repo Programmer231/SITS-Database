@@ -46,7 +46,7 @@ const Login = (props) => {
                 onSubmit={(event) => submitHandler(event, email, password)}
               >
                 <div className={classes.control}>
-                  <label htmlFor="Part">Username</label>
+                  <label htmlFor="Part">Email</label>
 
                   <input
                     name="Part"
