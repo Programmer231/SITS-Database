@@ -3,6 +3,7 @@ import classes from "./DisplayData.module.css";
 import DisplayDefined from "./DisplayDefined";
 import DisplayUndefined from "./DisplayUndefined";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../Contexts/AuthContext";
 
 const DisplayData = (props) => {
   const [definedState, setDefinedState] = useState([]);
@@ -11,6 +12,7 @@ const DisplayData = (props) => {
   const [descriptionClicked, setDescriptionState] = useState(false);
   const [purposeClicked, setPurposeClicked] = useState(false);
   const [typeClicked, setTypeClicked] = useState(false);
+  const { currentUser } = useAuth();
 
   const [updatedFormData, setUpdatedFormData] = useState({
     part: props.mySearchedInfo.part || "",
@@ -97,7 +99,7 @@ const DisplayData = (props) => {
     }
 
     fetch(
-      `https://sits-practice-default-rtdb.firebaseio.com/${props.specialID}/${props.firebaseID}/${props.mySearchedInfo.id}/.json`,
+      `https://sits-practice-default-rtdb.firebaseio.com/${props.specialID}/${props.firebaseID}/${props.mySearchedInfo.id}/.json?auth=${currentUser.multiFactor.user.accessToken}`,
       {
         method: "PATCH",
         body: JSON.stringify(finalData),
@@ -268,9 +270,20 @@ const DisplayData = (props) => {
             <h1>NONE</h1>
           )}
           <div className={classes.actions}>
-            <div className = {classes.flexButtons}>
-            <button onClick={submitHandler}>Update</button>
-            <button onClick = {() => props.deleteHandler(props.specialID, props.firebaseID, props.mySearchedInfo.id)} style = {{backgroundColor: 'red'}}>DELETE</button>
+            <div className={classes.flexButtons}>
+              <button onClick={submitHandler}>Update</button>
+              <button
+                onClick={() =>
+                  props.deleteHandler(
+                    props.specialID,
+                    props.firebaseID,
+                    props.mySearchedInfo.id
+                  )
+                }
+                style={{ backgroundColor: "red" }}
+              >
+                DELETE
+              </button>
             </div>
           </div>
         </div>

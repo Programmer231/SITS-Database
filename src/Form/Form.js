@@ -2,12 +2,15 @@ import classes from "./NewMeetupForm.module.css";
 import { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import CheckBox from "./CheckBox/CheckBox";
+import { useAuth } from "../Contexts/AuthContext";
 
 const Form = (props) => {
   const [checkedData, setCheckedData] = useState({});
   const [dataType, setDataType] = useState("School");
 
   const { certifications } = props;
+
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const finalChecks = {};
@@ -33,7 +36,7 @@ const Form = (props) => {
 
   const dataTypeChangedHandler = (event) => {
     setDataType(event.target.value);
-  }
+  };
 
   const inputStringChangedHandler = (event, name) => {
     setFormData((prevState) => {
@@ -65,9 +68,9 @@ const Form = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(event);
 
-    if(dataType === "School"){
+    if (dataType === "School") {
       fetch(
-        "https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json",
+        `https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json?auth=${currentUser.multiFactor.user.accessToken}`,
         {
           method: "POST",
           body: JSON.stringify({ ...formData, ...checkedData }),
@@ -91,7 +94,7 @@ const Form = (props) => {
       });
     } else {
       fetch(
-        "https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json",
+        `https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json?auth=${currentUser.multiFactor.user.accessToken}`,
         {
           method: "POST",
           body: JSON.stringify({ ...formData, ...checkedData }),
@@ -114,7 +117,6 @@ const Form = (props) => {
         setCheckedData({});
       });
     }
-
   };
 
   return (
@@ -221,9 +223,18 @@ const Form = (props) => {
           </div>
           <div className={classes.control}>
             <label htmlFor="total price">Data Type</label>
-            <select name = "Data Type" id = "Data Type" onChange={dataTypeChangedHandler} className = {classes.options}>
-              <option name = "School" value = "School">School</option>
-              <option name = "SITS" value = "SITS">SITS</option>
+            <select
+              name="Data Type"
+              id="Data Type"
+              onChange={dataTypeChangedHandler}
+              className={classes.options}
+            >
+              <option name="School" value="School">
+                School
+              </option>
+              <option name="SITS" value="SITS">
+                SITS
+              </option>
             </select>
           </div>
           <div className={classes.control}>

@@ -11,6 +11,7 @@ import BarcodeReader from "react-barcode-reader";
 import Backdrop from "@mui/material/Backdrop";
 import Modal from "../Modal/Modal";
 import printJS from "print-js";
+import { useAuth } from "../Contexts/AuthContext";
 
 const AddField = () => {
   const [addField, setAddField] = useState({
@@ -33,6 +34,8 @@ const AddField = () => {
   const searchRef = useRef();
   const partSchoolDataConstant = useRef();
   const partSITSDataConstant = useRef();
+
+  const { currentUser } = useAuth();
 
   const handleScan = (data) => {
     if (parseInt(data)) {
@@ -225,9 +228,8 @@ const AddField = () => {
   useEffect(() => {
     let partSchoolData = [];
     let partSITSData = [];
-
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json"
+      `https://sits-practice-default-rtdb.firebaseio.com/School/-N0BBR52DkRON_JqpgXE.json?auth=${currentUser.multiFactor.user.accessToken}`
     )
       .then((response) => {
         return response.json();
@@ -249,7 +251,7 @@ const AddField = () => {
       });
 
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json"
+      `https://sits-practice-default-rtdb.firebaseio.com/SITS/-N0BBR4Loyk2cg6SgPDy.json?auth=${currentUser.multiFactor.user.accessToken}`
     )
       .then((response) => {
         return response.json();
@@ -554,7 +556,7 @@ const AddField = () => {
   const submitAddField = () => {
     let certificationData = [];
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json",
+      `https://sits-practice-default-rtdb.firebaseio.com/Certifications.json?auth=${currentUser.multiFactor.user.accessToken}`,
       {
         method: "POST",
         body: JSON.stringify(addField),
@@ -562,7 +564,7 @@ const AddField = () => {
       }
     ).then(() => {
       fetch(
-        "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json"
+        `https://sits-practice-default-rtdb.firebaseio.com/Certifications.json?auth=${currentUser.multiFactor.user.accessToken}`
       )
         .then((response) => {
           return response.json();
@@ -604,7 +606,7 @@ const AddField = () => {
   useEffect(() => {
     let certificationData = [];
     fetch(
-      "https://sits-practice-default-rtdb.firebaseio.com/Certifications.json"
+      `https://sits-practice-default-rtdb.firebaseio.com/Certifications.json?auth=${currentUser.multiFactor.user.accessToken}`
     )
       .then((response) => {
         return response.json();
