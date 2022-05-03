@@ -35,7 +35,7 @@ const Login = (props) => {
     <div>
       {currentUser ? <Navigate to="/database" /> : null}
       {props.smileyFace ? (
-        <img src={BeHappy} alt="Be Happy :)" width="800px" height="800px"></img>
+        <div style = {{width: '100%'}}><img src={BeHappy} alt="Be Happy :)" style = {{width: '50%', display: 'block', margin: 'auto'}}></img></div>
       ) : (
         <div className={loginClasses.loginWrap}>
           <Card>
