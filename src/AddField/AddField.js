@@ -12,10 +12,10 @@ import Backdrop from "@mui/material/Backdrop";
 import Modal from "../Modal/Modal";
 import printJS from "print-js";
 import { useAuth } from "../Contexts/AuthContext";
-import {Document, Packer, Paragraph, Table, TableCell, TableRow} from 'docx';
-const fs = require('fs');
+import {CSVLink, CSVDownload} from 'react-csv';
 
 const AddField = () => {
+
   const [addField, setAddField] = useState({
     type: "",
     number: false,
@@ -759,49 +759,13 @@ const AddField = () => {
       </div>
       <div className={classes.centerPrintButtons}>
         <div className={classes.printActions}>
-          <button
-            className={classes.printButton}
-            onClick={() =>
-              printJS({
-                printable: partSchoolInfo,
-                type: "json",
-                properties: [
-                  "part",
-                  "number",
-                  "price",
-                  "totalPrice",
-                  "PCEPTagNumber",
-                  "assetTagNumber",
-                  "serialNumber",
-                  "purpose",
-                  "type",
-                ],
-              })
-            }
-          >
-            Print School Data to Word Document
+          <button className = {classes.printButton}>
+          <CSVLink data = {partSchoolInfo} style = {{textDecoration: 'none', color: 'white'}}>Print School Data to SpreadSheet</CSVLink>
           </button>
           <button
             className={classes.printButton}
-            onClick={() =>
-              printJS({
-                printable: partSITSInfo,
-                type: "json",
-                properties: [
-                  "part",
-                  "number",
-                  "price",
-                  "totalPrice",
-                  "PCEPTagNumber",
-                  "assetTagNumber",
-                  "serialNumber",
-                  "purpose",
-                  "type",
-                ],
-              })
-            }
           >
-            Print SITS Data to Word Document
+            <CSVLink data = {partSITSInfo} style = {{textDecoration: 'none', color: 'white'}}>Print SITS Data to SpreadSheet</CSVLink>
           </button>
         </div>
       </div>
