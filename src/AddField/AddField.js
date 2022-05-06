@@ -760,12 +760,12 @@ const AddField = () => {
       <div className={classes.centerPrintButtons}>
         <div className={classes.printActions}>
           <button className = {classes.printButton}>
-          <CSVLink data = {partSchoolInfo} style = {{textDecoration: 'none', color: 'white'}}>Print School Data to SpreadSheet</CSVLink>
+          <CSVLink data = {partSchoolInfo} style = {{textDecoration: 'none', color: 'white'}}>Print School Data to Spreadsheet</CSVLink>
           </button>
           <button
             className={classes.printButton}
           >
-            <CSVLink data = {partSITSInfo} style = {{textDecoration: 'none', color: 'white'}}>Print SITS Data to SpreadSheet</CSVLink>
+            <CSVLink data = {partSITSInfo} style = {{textDecoration: 'none', color: 'white'}}>Print SITS Data to Spreadsheet</CSVLink>
           </button>
         </div>
       </div>

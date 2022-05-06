@@ -49,7 +49,7 @@ const Login = (props) => {
 
                   <input
                     name="Part"
-                    type="text"
+                    type="email"
                     value={email}
                     onChange={emailChangedHandler}
                     required
@@ -60,7 +60,7 @@ const Login = (props) => {
 
                   <input
                     name="Part"
-                    type="text"
+                    type="password"
                     value={password}
                     onChange={passwordChangedHandler}
                     required
