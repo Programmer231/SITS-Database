@@ -7,7 +7,7 @@ import "firebase/compat/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const app = firebase.initializeApp({
-  apiKey: "AIzaSyDllJmdNEN8alQzFZ6wjy71U-dl3N17W6I",
+  apiKey: "process.env.APIKEY",
   authDomain: process.env.DOMAIN,
   databaseURL: process.env.DATABASE_URL,
   projectId: process.env.PROJECT_ID,
